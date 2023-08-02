@@ -4,7 +4,7 @@ files:
   - source: /
     destination: /var/www/webapp
 hooks:
-  BeforeInstall:
+  AfterInstall:
     - location: src/scripts/install_dependencies.sh
       timeout: 300
       runas: root
