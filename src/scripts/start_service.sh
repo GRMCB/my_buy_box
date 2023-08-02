@@ -2,4 +2,4 @@
 
 export FLASK_APP=src/app.py
 
-flask run
+python3 -m flask run
