@@ -1,5 +1,5 @@
 version: 0.0
-os: linux 
+os: linux
 files:
   - source: /
     destination: /var/www/webapp
@@ -10,5 +10,4 @@ hooks:
       runas: root
   ApplicationStart:
     - location: src/scripts/start_service.sh
-      timeout: 120
       runas: root
