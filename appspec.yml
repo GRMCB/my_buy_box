@@ -5,10 +5,10 @@ files:
     destination: /var/www/webapp
 hooks:
   BeforeInstall:
-    - location: scripts/install_dependencies.sh
+    - location: src/scripts/install_dependencies.sh
       timeout: 300
       runas: root
   ApplicationStart:
-    - location: scripts/start_service.sh
+    - location: src/scripts/start_service.sh
       timeout: 120
       runas: root
