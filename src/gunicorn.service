@@ -4,6 +4,7 @@ After=network.target
 [Service]
 User=ec2-user
 Group=ec2-user
-ExecStart=/var/www/webapp/src/gunicorn --bind 0.0.0.0:8080 wsgi:app
+WorkingDirectory=/var/www/webapp/src/
+ExecStart=gunicorn --bind 0.0.0.0:8080 wsgi:app
 [Install]
 WantedBy=multi-user.target
