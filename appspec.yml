@@ -3,7 +3,7 @@ os: linux
 files:
   - source: /
     destination: /var/www/webapp
-  - source: gunicorn.ini
+  - source: src/gunicorn.ini
     destination: /etc/systemd/system/gunicorn.service
 hooks:
   AfterInstall:
@@ -12,4 +12,5 @@ hooks:
       runas: root
   ApplicationStart:
     - location: src/scripts/start_service.sh
+      timeout: 300
       runas: root
