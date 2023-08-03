@@ -7,10 +7,10 @@ files:
     destination: /etc/systemd/system/
 hooks:
   BeforeInstall:
-    - location: src/scripts/install_dependencies.sh
+    - location: applications/web-server/src/scripts/install_dependencies.sh
       timeout: 300
       runas: root
   ApplicationStart:
-    - location: src/scripts/start_service.sh
+    - location: applications/web-server/src/scripts/start_service.sh
       timeout: 300
       runas: root
