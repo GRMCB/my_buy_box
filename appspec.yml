@@ -3,8 +3,8 @@ os: linux
 files:
   - source: /
     destination: /var/www/webapp
-  - source: src/gunicorn.ini
-    destination: /etc/systemd/system/gunicorn.service
+  - source: src/gunicorn.service
+    destination: /etc/systemd/system/
 hooks:
   AfterInstall:
     - location: src/scripts/install_dependencies.sh
