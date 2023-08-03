@@ -6,7 +6,7 @@ files:
   - source: src/gunicorn.service
     destination: /etc/systemd/system/
 hooks:
-  AfterInstall:
+  BeforeInstall:
     - location: src/scripts/install_dependencies.sh
       timeout: 300
       runas: root
