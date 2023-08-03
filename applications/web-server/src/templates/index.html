@@ -1,33 +1,28 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-  <style type="text/css">
-    body {
-      background: black;
-      color: white;
-    }
-
-    div.container {
-      max-width: 500px;
-      margin: 100px auto;
-      border: 20px solid white;
-      padding: 10px;
-      text-align: center;
-    }
-
-    h2 {
-      text-transform: uppercase;
-    }
-  </style>
+  <title>Zip Code Form</title>
 </head>
-
 <body>
-<div class="container">
-  <h2>Quote of the day</h2>
-  <hr>
-  <h3>FILM: </h3><h4> {{ film }} </h4>
-  <h3>QUOTE: </h3><h4> {{ quote }} </h4>
-</div>
-</body>
+<form>
+  <label for="zip">Enter your zip code:</label><br>
+  <input type="text" id="zip" name="zip"><br><br>
+  <button type="button" onclick="getHouses()">Submit</button>
+</form>
 
+<script>
+  function getHouses() {
+    var zip = document.getElementById("zip").value;
+    var houses = ["House 1", "House 2", "House 3", "House 4", "House 5"];
+    var output = "";
+    for (var i = 0; i < houses.length; i++) {
+      output += "<li>" + houses[i] + "</li>";
+    }
+    document.getElementById("houseList").innerHTML = output;
+  }
+</script>
+
+<ul id="houseList"></ul>
+
+</body>
 </html>
