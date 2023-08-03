@@ -3,7 +3,7 @@ os: linux
 files:
   - source: /
     destination: /var/www/webapp
-  - source: src/gunicorn.service
+  - source: applications/web-server/src/gunicorn.service
     destination: /etc/systemd/system/
 hooks:
   BeforeInstall:
