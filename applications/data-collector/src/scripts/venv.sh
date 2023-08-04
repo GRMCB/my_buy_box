@@ -1,2 +1,3 @@
 #!/bin/bash
-source applications/web-server/src/scripts/install_dependencies.sh
+cd /var/www/webapp/applications/data-collector/src/scripts/
+source install_dependencies.sh
