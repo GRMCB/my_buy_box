@@ -3,14 +3,22 @@ os: linux
 files:
   - source: /
     destination: /var/www/webapp
-  - source: applications/web-server/src/gunicorn.service
-    destination: /etc/systemd/system/
+  - source: applications/web-server/src/gunicorn.config
+    destination: /etc/systemd/system/gunicorn-web.service
+  - source: applications/data-collector/src/gunicorn.config
+    destination: /etc/systemd/system/gunicorn-collector.service
 hooks:
   BeforeInstall:
     - location: applications/web-server/src/scripts/install_dependencies.sh
       timeout: 300
       runas: root
+    - location: applications/data-collector/src/scripts/install_dependencies.sh
+      timeout: 300
+      runas: root
   ApplicationStart:
     - location: applications/web-server/src/scripts/start_service.sh
+      timeout: 300
+      runas: root
+    - location: applications/data-collector/src/scripts/start_service.sh
       timeout: 300
       runas: root
