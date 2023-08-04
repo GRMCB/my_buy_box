@@ -4,25 +4,10 @@
   <title>Zip Code Form</title>
 </head>
 <body>
-<form>
+<form action="/verify" method = "POST">
   <label for="zip">Enter your zip code:</label><br>
   <input type="text" id="zip" name="zip"><br><br>
-  <button type="button" onclick="getHouses()">Submit</button>
+  <input type="submit" value="Submit"</input>
 </form>
-
-<script>
-  function getHouses() {
-    var zip = document.getElementById("zip").value;
-    var houses = ["House 1", "House 2", "House 3", "House 4", "House 5"];
-    var output = "";
-    for (var i = 0; i < houses.length; i++) {
-      output += "<li>" + houses[i] + "</li>";
-    }
-    document.getElementById("houseList").innerHTML = output;
-  }
-</script>
-
-<ul id="houseList"></ul>
-
 </body>
 </html>
