@@ -1,2 +1,2 @@
 #!/bin/bash
-source install_dependencies.sh
+source applications/web-server/src/scripts/install_dependencies.sh
