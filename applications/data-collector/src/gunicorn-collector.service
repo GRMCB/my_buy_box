@@ -5,6 +5,6 @@ After=network.target
 User=ec2-user
 Group=ec2-user
 WorkingDirectory=/var/www/webapp/applications/data-collector/src/
-ExecStart=/bin/sh -c 'cd /var/www/webapp/applications/data-collector/src/scripts && source venv/bin/activate && && cd .. && gunicorn --bind 0.0.0.0:8081 app:app'
+ExecStart=/bin/sh -c 'cd /var/www/webapp/applications/data-collector/src/scripts && source venv/bin/activate && cd .. && gunicorn --bind 0.0.0.0:8081 app:app'
 [Install]
 WantedBy=multi-user.target
