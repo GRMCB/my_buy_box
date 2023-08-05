@@ -12,7 +12,7 @@ hooks:
     - location: applications/web-server/src/scripts/install_dependencies.sh
       timeout: 300
       runas: root
-    - location: applications/data-collector/src/scripts/start_service.sh
+    - location: applications/data-collector/src/scripts/venv.sh
       timeout: 300
       runas: root
   ApplicationStart:
