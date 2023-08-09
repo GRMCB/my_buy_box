@@ -8,7 +8,7 @@ files:
   - source: applications/data-collector/src/gunicorn-collector.service
     destination: /etc/systemd/system/
 hooks:
-  BeforeInstall:
+  AfterInstall:
     - location: build/venv.sh
       timeout: 300
       runas: root
