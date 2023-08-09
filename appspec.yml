@@ -9,10 +9,10 @@ files:
     destination: /etc/systemd/system/
 hooks:
   BeforeInstall:
-    - location: applications/build/venv.sh
+    - location: build/venv.sh
       timeout: 300
       runas: root
   ApplicationStart:
-    - location: applications/build/start_services.sh
+    - location: build/start_services.sh
       timeout: 300
       runas: root
