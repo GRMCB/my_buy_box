@@ -1,0 +1,64 @@
+{
+  "zip_code": {
+    "98011": {
+      "REDFIN_SEARCH_PARAMETERS": {
+        "al": 1,
+        "status": 1,
+        "region_id": 98011,
+        "uipt": 1,
+        "sp": true,
+        "region_type": 2,
+        "page_number": 1,
+        "v": 8,
+        "min_parcel_size": 5000,
+        "num_homes": 500,
+        "min_price": 500000,
+        "max_price": 1500000,
+        "min_num_beds": 3,
+        "min_num_baths": 2,
+        "gar": true,
+        "min_num_park": 2
+      }
+    },
+    "98034": {
+      "REDFIN_SEARCH_PARAMETERS": {
+        "al": 1,
+        "status": 1,
+        "region_id": 98034,
+        "uipt": 1,
+        "sp": true,
+        "region_type": 2,
+        "page_number": 1,
+        "v": 8,
+        "min_parcel_size": 5000,
+        "num_homes": 500,
+        "min_price": 500000,
+        "max_price": 1500000,
+        "min_num_beds": 3,
+        "min_num_baths": 2,
+        "gar": true,
+        "min_num_park": 2
+      }
+    },
+    "98072": {
+      "REDFIN_SEARCH_PARAMETERS": {
+        "al": 1,
+        "status": 1,
+        "region_id": 98072,
+        "uipt": 1,
+        "sp": true,
+        "region_type": 2,
+        "page_number": 1,
+        "v": 8,
+        "min_parcel_size": 5000,
+        "num_homes": 500,
+        "min_price": 500000,
+        "max_price": 1500000,
+        "min_num_beds": 3,
+        "min_num_baths": 2,
+        "gar": true,
+        "min_num_park": 2
+      }
+    }
+  }
+}
