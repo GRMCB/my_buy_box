@@ -1,6 +1,6 @@
 #!/bin/bash
-sudo python3.10 -m ensurepip --upgrade
+sudo python3.9 -m ensurepip --upgrade
 pip3 install virtualenv
-virtualenv -p python3.10 venv
+sudo virtualenv -p python3.9 venv
 source venv/bin/activate
 pip3 install -r requirements.txt
