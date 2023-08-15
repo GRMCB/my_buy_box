@@ -38,9 +38,6 @@ def get_all_user_listings():
 app = Flask(__name__)
 client = Redfin()
 
-user_search_criteria = load_user_listing_criteria()
-
-
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=5)
 scheduler.start()
