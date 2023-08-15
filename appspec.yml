@@ -3,9 +3,9 @@ os: linux
 files:
   - source: /
     destination: /var/www/webapp
-  - source: applications/web-server/src/gunicorn-web.service
+  - source: applications/web-server/src/main/gunicorn-web.service
     destination: /etc/systemd/system/
-  - source: applications/data-collector/src/gunicorn-collector.service
+  - source: applications/data-collector/src/main/gunicorn-collector.service
     destination: /etc/systemd/system/
 hooks:
   AfterInstall:
