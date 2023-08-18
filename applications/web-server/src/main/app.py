@@ -3,7 +3,7 @@ import os
 os.environ['PYTHONPATH'] = '/var/www/webapp/applications/web-server/src/main/'
 
 from flask import Flask, redirect, render_template, request
-from main.helpers import valid_zipcode, load_valid_zipcodes
+from helpers import valid_zipcode, load_valid_zipcodes
 
 app = Flask(__name__)
 valid_zipcodes_list = load_valid_zipcodes()
