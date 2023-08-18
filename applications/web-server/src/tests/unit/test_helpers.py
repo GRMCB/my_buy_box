@@ -1,3 +1,10 @@
+import os
+
+os.environ['PYTHONPATH'] = '/var/www/webapp/applications/web-server/src/main/'
+
+import sys
+sys.path.append(r"/var/www/webapp/applications/web-server/src/main/")
+
 from main.helpers import valid_zipcode
 import pytest
 
