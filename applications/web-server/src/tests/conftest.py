@@ -1,11 +1,12 @@
-from main.app import app
-import pytest
-import os
-import json
-
 import os
 
 os.environ['PYTHONPATH'] = '/var/www/webapp/applications/web-server/src/main/'
+
+from main.app import app
+import pytest
+import json
+
+
 
 @pytest.fixture
 def app_test_client():
