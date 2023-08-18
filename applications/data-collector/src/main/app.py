@@ -13,8 +13,6 @@ logging.basicConfig(level=logging.DEBUG,
 logger = logging.getLogger(__name__)
 
 all_listings = []
-def print_date_time():
-    print(time.strftime("%A, %d. %B %Y %I:%M:%S %p"))
 
 def load_user_listing_criteria():
     cur_path = os.path.dirname("listing_criteria.json")
@@ -38,11 +36,17 @@ def get_all_user_listings():
 app = Flask(__name__)
 client = Redfin()
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=5)
-scheduler.start()
 
-atexit.register(scheduler.shutdown)
+
+
 
 if __name__ == '__main__':
+
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=5)
+    scheduler.start()
+
     app.run(debug=True, host='0.0.0.0')
+
+    atexit.register(scheduler.shutdown)
+
