@@ -1,0 +1,36 @@
+name: Run tests
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      python-version: 3.9
+
+    steps:
+      # Checkout the latest code from the repo
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        # Setup which version of Python to use
+      - name: Set Up Python ${{ python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ python-version }}
+        # Display the Python version being used
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+        # Install the package using the setup.py
+      - name: Install venv and dependencies
+        run: ./build/venv.sh
+        # Run the tests. I'm using pytest and the file is in the tests directory.
+      - name: Run web-server tests
+        run: python3 -m pytest web-server/ -v
+      - name: Run data-collector tests
+        run: python3 -m pytest data-collector/ -v
