@@ -33,6 +33,6 @@ jobs:
           ./venv.sh
         # Run the tests. I'm using pytest and the file is in the tests directory.
       - name: Run web-server tests
-        run: python3 -m pytest web-server/ -v
+        run: python3 -m pytest ./applications/web-server/ -v
       - name: Run data-collector tests
-        run: python3 -m pytest data-collector/ -v
+        run: python3 -m pytest ./applications/data-collector/ -v
