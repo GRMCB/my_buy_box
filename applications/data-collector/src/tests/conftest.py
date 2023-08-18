@@ -3,6 +3,7 @@ import pytest
 import os
 import json
 
+os.environ['PYTHONPATH'] = '/var/www/webapp/applications/data-collector/src/main/'
 TEST_DATA_PATH = "/applications/data-collector/src/tests/test_data/test_listing_criteria.json"
 
 @pytest.fixture
