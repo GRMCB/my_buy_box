@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from flask import Flask, redirect, render_template, request
-from helpers import valid_zipcode, load_valid_zipcodes
+from main.helpers import valid_zipcode, load_valid_zipcodes
 
 app = Flask(__name__)
 valid_zipcodes_list = load_valid_zipcodes()
