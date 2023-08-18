@@ -27,8 +27,8 @@ jobs:
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
         # Install the package using the setup.py
-      - name: Install venv and dependencies
-        run: sudo ./build/venv.sh
+      - name: Run build script
+        run: ./.github/build/venv.sh
         # Run the tests. I'm using pytest and the file is in the tests directory.
       - name: Run web-server tests
         run: python3 -m pytest web-server/ -v
