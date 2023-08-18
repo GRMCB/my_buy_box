@@ -3,7 +3,7 @@ import pytest
 import os
 import json
 
-TEST_DATA_PATH = "/data-collector/src/tests/test_data/test_listing_criteria.json"
+TEST_DATA_PATH = "/applications/data-collector/src/tests/test_data/test_listing_criteria.json"
 
 @pytest.fixture
 def load_test_listing_criteria():
