@@ -1,6 +1,8 @@
 from main.helpers import valid_zipcode
 import pytest
 
+os.environ['PYTHONPATH'] = '/var/www/webapp/applications/web-server/src/main/'
+
 def test_invalid_zipcode(load_valid_zipcodes):
     zip_code = "00000"
 
