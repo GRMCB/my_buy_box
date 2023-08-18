@@ -3,6 +3,10 @@ import pytest
 import os
 import json
 
+import os
+
+os.environ['PYTHONPATH'] = '/var/www/webapp/applications/web-server/src/main/'
+
 @pytest.fixture
 def app_test_client():
 
