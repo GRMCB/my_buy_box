@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+import os
+os.environ['PYTHONPATH'] = '/var/www/webapp/applications/web-server/src/main/'
+
 from flask import Flask, redirect, render_template, request
 from main.helpers import valid_zipcode, load_valid_zipcodes
 
