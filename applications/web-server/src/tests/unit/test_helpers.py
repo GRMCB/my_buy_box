@@ -1,5 +1,6 @@
 from main.helpers import valid_zipcode
 import pytest
+import os
 
 os.environ['PYTHONPATH'] = '/var/www/webapp/applications/web-server/src/main/'
 
