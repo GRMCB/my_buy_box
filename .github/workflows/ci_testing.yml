@@ -10,19 +10,19 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     strategy:
-      python-version: 3.9
+      matrix:
+        python-version: ["3.9"]
 
     steps:
       # Checkout the latest code from the repo
       - name: Checkout Repository
         uses: actions/checkout@v2
         # Setup which version of Python to use
-      - name: Set Up Python ${{ python-version }}
+      - name: Set Up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ python-version }}
+          python-version: ${{ matrix.python-version }}
         # Display the Python version being used
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
