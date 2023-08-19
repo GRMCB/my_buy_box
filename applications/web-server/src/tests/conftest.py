@@ -1,3 +1,4 @@
+import main.helpers
 from main.app import app
 import pytest
 import json
