@@ -1,8 +1,9 @@
-import main.helpers
-from main.app import app
+import os
+from ..main.app import app
 import pytest
 import json
-import os
+
+
 
 @pytest.fixture
 def app_test_client():
