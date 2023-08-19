@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-import os
-os.environ['PYTHONPATH'] = '/var/www/webapp/applications/web-server/src/main/'
-
 from flask import Flask, redirect, render_template, request
-from helpers import valid_zipcode, load_valid_zipcodes
+
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py")
+from main.helpers import valid_zipcode, load_valid_zipcodes
+
 valid_zipcodes_list = load_valid_zipcodes()
 
 @app.route("/", methods = ['GET'])
