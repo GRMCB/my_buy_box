@@ -1,4 +1,4 @@
-from ...main.helpers import valid_zipcode
+from helpers import valid_zipcode
 
 def test_invalid_zipcode(load_valid_zipcodes):
     zip_code = "00000"

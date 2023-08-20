@@ -4,7 +4,7 @@ from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py")
-from .helpers import valid_zipcode, load_valid_zipcodes
+from helpers import valid_zipcode, load_valid_zipcodes
 
 valid_zipcodes_list = load_valid_zipcodes()
 

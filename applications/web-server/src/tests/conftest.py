@@ -1,9 +1,10 @@
 import os
-from ..main.app import app
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../main")))
 import pytest
 import json
-
-
+from main.app import app
 
 @pytest.fixture
 def app_test_client():
