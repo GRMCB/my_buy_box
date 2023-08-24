@@ -82,7 +82,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = \
     'sqlite:///' + os.path.join(basedir, 'database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = Database(app)
+db = SQLAlchemy(app)
 db.create_all()
 
 class ListingRecord(db.Model):
