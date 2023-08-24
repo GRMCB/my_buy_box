@@ -1,7 +1,4 @@
-import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..components/listings/")))
 from flask import Flask
 import logging
 import atexit
@@ -12,6 +9,7 @@ from redfin import Redfin
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from components.listings.src.main.listing_record import ListingRecord
+from components.listings.src.main.listing_db import Database
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
@@ -84,7 +82,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = \
     'sqlite:///' + os.path.join(basedir, 'database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+db = Database(app)
+
 
 if __name__ == '__main__':
     load_dotenv()
