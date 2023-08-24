@@ -1,3 +1,5 @@
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "......")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "....../components")))
 from flask import Flask
 import logging
 import atexit
