@@ -78,12 +78,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 client = Redfin()
 
-app.config['SQLALCHEMY_DATABASE_URI'] = \
-    'sqlite:///' + os.path.join(basedir, 'database.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+with app.app_context()
+    app.config['SQLALCHEMY_DATABASE_URI'] = \
+        'sqlite:///' + os.path.join(basedir, 'database.db')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
-db.create_all()
+    db = SQLAlchemy(app)
+    db.create_all()
 
 class ListingRecord(db.Model):
     __tablename__ = 'listing_records'
