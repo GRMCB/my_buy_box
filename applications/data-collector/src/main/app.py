@@ -1,4 +1,5 @@
 import sys
+import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "......")))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "....../components")))
 from flask import Flask
@@ -7,7 +8,6 @@ import atexit
 import time
 import json
 from apscheduler.schedulers.background import BackgroundScheduler
-import os
 from redfin import Redfin
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
