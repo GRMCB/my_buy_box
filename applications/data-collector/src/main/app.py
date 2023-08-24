@@ -11,7 +11,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from redfin import Redfin
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
-from listing_record import ListingRecord
+from components.listings.src.main.listing_record import ListingRecord
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
