@@ -2,7 +2,7 @@
 import sys, psycopg2, psycopg2.sql as sql
 
 
-class ListingDataGateway:
+class Database:
     def __init__(self, user, password, host, port, dbname, table, primarykey):
         self.user = user
         self.password = password
