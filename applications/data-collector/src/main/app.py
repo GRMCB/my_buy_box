@@ -8,7 +8,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from redfin import Redfin
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
-from model import ListingRecord
+from models import ListingRecord
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
