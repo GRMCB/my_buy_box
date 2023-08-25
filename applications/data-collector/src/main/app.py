@@ -1,4 +1,4 @@
-from .models import ListingRecord
+from main.models import ListingRecord
 import os
 from flask import Flask
 import logging
