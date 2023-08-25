@@ -1,7 +1,4 @@
-import sys
-sys.path.append(r"/applications/data-collector/src/main/")
-
-from models import ListingRecord
+from .models import ListingRecord
 import os
 from flask import Flask
 import logging
