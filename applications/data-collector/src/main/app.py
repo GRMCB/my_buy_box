@@ -71,7 +71,11 @@ def save_listings_to_database(all_listings):
         db.session.add(listing_record)
         db.session.commit()
 
-        print(listing_record.id)
+        print(get_listings(db.session))
+
+def get_listings(session):
+    """Get a list of author objects sorted by last name"""
+    return session.query(ListingRecord).order_by(ListingRecord.mls_number).all()
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -100,7 +104,7 @@ if __name__ == '__main__':
     DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD')
 
     scheduler = BackgroundScheduler()
-    scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=5)
+    scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=10)
     scheduler.start()
 
     app.run(debug=True, host='0.0.0.0')
