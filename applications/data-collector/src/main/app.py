@@ -80,6 +80,7 @@ app = Flask(__name__)
 client = Redfin()
 parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 db_path = os.path.join(parent_dir, 'database', 'database.db')
+print(db_path)
 
 with app.app_context():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
