@@ -1,3 +1,6 @@
+import sys
+sys.path.append(r"/applications/data-collector/src/main/")
+
 from models import ListingRecord
 import os
 from flask import Flask
@@ -9,6 +12,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from redfin import Redfin
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
+
+
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
