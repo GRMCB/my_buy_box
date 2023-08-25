@@ -1,9 +1,8 @@
-from models import ListingRecord
+from database.models import ListingRecord
 import os
 from flask import Flask
 import logging
 import atexit
-import time
 import json
 from apscheduler.schedulers.background import BackgroundScheduler
 from redfin import Redfin
@@ -79,7 +78,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 client = Redfin()
 parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-db_path = os.path.join(parent_dir, 'database', 'database.db')
+db_path = os.path.join(parent_dir, 'main/database', 'database.db')
 print(db_path)
 
 with app.app_context():
