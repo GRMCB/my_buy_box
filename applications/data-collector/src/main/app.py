@@ -93,7 +93,7 @@ with app.app_context():
     def __repr__(self):
         return f'<Student {self.id}>'
 
-@app.route("api/listings", methods = ['GET'])
+@app.route("/api/listings", methods = ['GET'])
 def get_listings():
     """Get a list of listings objects sorted by MLS number"""
     listings = ListingRecord.query(ListingRecord).order_by(ListingRecord.mls_number).all()
