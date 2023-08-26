@@ -22,6 +22,7 @@ def load_user_listing_criteria():
         user_search_criteria = json.load(listing_criteria)
         return user_search_criteria
 def get_all_user_listings():
+    logger.info("Running get_all_user_listings() function to get listings from Redfin");
     user_search_criteria = load_user_listing_criteria()
     all_listings = []
 
