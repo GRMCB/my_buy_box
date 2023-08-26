@@ -74,11 +74,8 @@ def save_listings_to_database(all_listings):
 
 app = Flask(__name__)
 client = Redfin()
-parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-db_path = os.path.join(parent_dir, '/database/', 'database.db')
-print(db_path)
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
 
 with app.app_context():
     app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///"+db_path
