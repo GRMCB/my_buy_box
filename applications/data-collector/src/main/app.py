@@ -22,18 +22,20 @@ def load_user_listing_criteria():
         user_search_criteria = json.load(listing_criteria)
         return user_search_criteria
 def get_all_user_listings():
-    logger.info("Running get_all_user_listings() function to get listings from Redfin");
-    user_search_criteria = load_user_listing_criteria()
-    all_listings = []
+    with app.app_context():
 
-    for zipcode, search_params in user_search_criteria["zip_code"].items():
-        zipcode_listings = client.search_all_by_zipcode(zipcode, search_params["REDFIN_SEARCH_PARAMETERS"])
+        logger.info("Running get_all_user_listings() function to get listings from Redfin");
+        user_search_criteria = load_user_listing_criteria()
+        all_listings = []
 
-        all_listings.extend(zipcode_listings)
+        for zipcode, search_params in user_search_criteria["zip_code"].items():
+            zipcode_listings = client.search_all_by_zipcode(zipcode, search_params["REDFIN_SEARCH_PARAMETERS"])
 
-    print(all_listings)
-    save_listings_to_database(all_listings)
-    return all_listings
+            all_listings.extend(zipcode_listings)
+
+        print(all_listings)
+        save_listings_to_database(all_listings)
+        return all_listings
 
 def save_listings_to_database(all_listings):
     for listing in all_listings:
