@@ -76,19 +76,22 @@ def save_listings_to_database(all_listings):
 app = Flask(__name__)
 client = Redfin()
 
-db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
-
-
-logger.info("Running with app.app_context():");
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=10)
 scheduler.start()
 
-app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///"+db_path
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
 
-db = SQLAlchemy(app)
-db.create_all()
+with app.app_context():
+
+    logger.info("Running with app.app_context():");
+
+
+    app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///"+db_path
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    db = SQLAlchemy(app)
+    db.create_all()
 
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
 def get_listings(zip_code):
