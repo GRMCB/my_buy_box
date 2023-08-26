@@ -74,12 +74,6 @@ def save_listings_to_database(all_listings):
         print(get_listings(db.session))
         app.logger.warning(())
 
-@app.route("api/listings", methods = ['GET'])
-def get_listings():
-    """Get a list of listings objects sorted by MLS number"""
-    listings = ListingRecord.query(ListingRecord).order_by(ListingRecord.mls_number).all()
-    return listings
-
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
@@ -98,6 +92,12 @@ with app.app_context():
 
     def __repr__(self):
         return f'<Student {self.id}>'
+
+@app.route("api/listings", methods = ['GET'])
+def get_listings():
+    """Get a list of listings objects sorted by MLS number"""
+    listings = ListingRecord.query(ListingRecord).order_by(ListingRecord.mls_number).all()
+    return listings
 
 if __name__ == '__main__':
     load_dotenv()
