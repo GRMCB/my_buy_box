@@ -81,7 +81,7 @@ print(db_path)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 with app.app_context():
-    app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///database/database.db"
+    app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///"+db_path
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db = SQLAlchemy(app)
