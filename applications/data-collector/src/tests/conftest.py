@@ -1,6 +1,9 @@
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../main")))
 from main.app import app
 import pytest
-import os
 import json
 
 os.environ['PYTHONPATH'] = '/var/www/webapp/applications/data-collector/src/main/'

@@ -72,10 +72,13 @@ def save_listings_to_database(all_listings):
         db.session.commit()
 
         print(get_listings(db.session))
+        app.logger.warning(())
 
-def get_listings(session):
-    """Get a list of author objects sorted by last name"""
-    return session.query(ListingRecord).order_by(ListingRecord.mls_number).all()
+@app.route("api/listings", methods = ['GET'])
+def get_listings():
+    """Get a list of listings objects sorted by MLS number"""
+    listings = ListingRecord.query(ListingRecord).order_by(ListingRecord.mls_number).all()
+    return listings
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
