@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from flask import Flask, redirect, render_template, request
-
+import requests
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py")
