@@ -1,26 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-{{ zip_code }}
-{% endblock %}
-
-
-
-<!-- templates/data.html -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>RP Flask REST API</title>
-</head>
-<body>
-<h1>
-  Home Listings for {{ zip_code }}
-</h1>
 <ul>
   {% for listing in listings %}
   <li>{{ listing.mls_number }} {{ listing.address }}</li>
   {% endfor %}
 </ul>
-</body>
-</html>
+{% endblock %}
