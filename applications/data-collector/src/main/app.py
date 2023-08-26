@@ -79,7 +79,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 client = Redfin()
 parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-db_path = os.path.join(parent_dir, 'main/database', 'database.db')
+db_path = os.path.join(parent_dir, '/database/', 'database.db')
 print(db_path)
 
 with app.app_context():
