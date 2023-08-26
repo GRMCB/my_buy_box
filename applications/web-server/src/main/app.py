@@ -22,7 +22,7 @@ def verify():
             zip_code_route = "/zipcode/" + str(zip_code)
             return redirect(zip_code_route)
 
-        return render_template("invalid.html")
+        return render_template("invalid.html", zip_code=zip_code)
 
 @app.route("/zipcode/<zip_code>", methods = ['POST', 'GET'])
 def zip_code(zip_code):
