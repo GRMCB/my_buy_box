@@ -83,7 +83,7 @@ db_path = os.path.join(parent_dir, '/database/', 'database.db')
 print(db_path)
 
 with app.app_context():
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///database/database.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
