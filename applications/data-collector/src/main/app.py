@@ -74,16 +74,16 @@ def save_listings_to_database(all_listings):
         print(get_listings(db.session))
         app.logger.warning(())
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 app = Flask(__name__)
 client = Redfin()
 parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 db_path = os.path.join(parent_dir, '/database/', 'database.db')
 print(db_path)
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 with app.app_context():
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///database/database.db'
+    app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///"+os.path.join(basedir, "posts.db")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
