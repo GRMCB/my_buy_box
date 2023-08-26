@@ -81,6 +81,9 @@ db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
 with app.app_context():
 
     logger.info("Running with app.app_context():");
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=10)
+    scheduler.start()
 
     app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///"+db_path
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -102,11 +105,6 @@ if __name__ == '__main__':
     DATABASE_URL = os.getenv('DATABASE_URL')
     DATABASE_USERNAME = os.getenv('DATABASE_USERNAME')
     DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD')
-
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=10)
-    scheduler.start()
-
 
     app.run(debug=True, host='0.0.0.0')
 
