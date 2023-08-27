@@ -8,8 +8,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../m
 
 Base = declarative_base()
 
-st = os.stat('database.db')
-os.chmod('database.db', st.st_mode | stat.S_IEXEC)
+st = os.stat('database/database.db')
+os.chmod('database/database.db', st.st_mode | stat.S_IEXEC)
 
 
 from flask_sqlalchemy import SQLAlchemy
