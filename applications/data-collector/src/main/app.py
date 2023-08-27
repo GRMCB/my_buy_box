@@ -72,7 +72,7 @@ def save_listings_to_database(all_listings):
         db.session.add(listing_record)
         db.session.commit()
         """
-        print(get_listings(db.session))
+        # print(get_listings(zip_code))
         app.logger.warning(())
 
 app = Flask(__name__)
