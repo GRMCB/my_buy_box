@@ -27,7 +27,7 @@ def verify():
 @app.route("/zipcode/<zip_code>", methods = ['POST', 'GET'])
 def zip_code(zip_code):
     # Call Database Rest API to get Zip code listings
-    listings = requests.get(f"http://127.0.0.1:8081/api/listing/{zip_code}")
+    listings = requests.get(f"http://127.0.0.1:8081/api/listings/{zip_code}")
 
     return render_template('data.html', listings=listings)
 
