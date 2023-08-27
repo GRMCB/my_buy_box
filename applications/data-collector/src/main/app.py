@@ -37,7 +37,6 @@ def get_all_user_listings():
         return all_listings
 
 def save_listings_to_database(all_listings):
-    """
     for listing in all_listings:
         listing_record = ListingRecord(
             id=int(listing['MLS#']),
@@ -71,8 +70,8 @@ def save_listings_to_database(all_listings):
         )
         db.session.add(listing_record)
         db.session.commit()
-        """
-    print(all_listings)
+
+        print(all_listings)
         # print(get_listings(zip_code))
         # app.logger.warning(())
 
