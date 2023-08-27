@@ -7,7 +7,9 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../m
 
 Base = declarative_base()
 
-db = SQLAlchemy(app)
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 class ListingRecord(db.model):
     __tablename__ = 'listing_records'
