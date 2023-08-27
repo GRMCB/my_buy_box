@@ -92,6 +92,7 @@ with app.app_context():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db = SQLAlchemy(app)
+    db.init_app(app)
     db.create_all()
 
 @app.route("/api/listings/<zip_code>", methods = ['GET'])

@@ -1,9 +1,10 @@
 from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
 from sqlalchemy.orm import declarative_base
+from main.app import db
 
 Base = declarative_base()
 
-class ListingRecord(Base):
+class ListingRecord(db.model):
     __tablename__ = 'listing_records'
     id = Column(Integer, primary_key=True)
     sale_type = Column(String(50))
