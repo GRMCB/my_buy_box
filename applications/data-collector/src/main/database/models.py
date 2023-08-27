@@ -4,9 +4,10 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../main")))
-from app import db
 
 Base = declarative_base()
+
+db = SQLAlchemy(app)
 
 class ListingRecord(db.model):
     __tablename__ = 'listing_records'

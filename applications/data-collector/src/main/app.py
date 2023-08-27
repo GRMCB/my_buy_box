@@ -1,4 +1,4 @@
-from database.models import ListingRecord
+from database.models import ListingRecord, db
 import os
 from flask import Flask
 import logging
@@ -7,7 +7,6 @@ import json
 from apscheduler.schedulers.background import BackgroundScheduler
 from redfin import Redfin
 from dotenv import load_dotenv
-from flask_sqlalchemy import SQLAlchemy
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
@@ -91,7 +90,6 @@ with app.app_context():
     app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///"+db_path
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    db = SQLAlchemy(app)
     db.init_app(app)
     db.create_all()
 
