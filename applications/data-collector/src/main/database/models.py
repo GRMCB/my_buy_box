@@ -2,15 +2,10 @@ from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
 from sqlalchemy.orm import declarative_base
 import sys
 import os
-import stat
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../main")))
 
 Base = declarative_base()
-
-st = os.stat('database/database.db')
-os.chmod('database/database.db', st.st_mode | stat.S_IEXEC)
-
 
 from flask_sqlalchemy import SQLAlchemy
 
