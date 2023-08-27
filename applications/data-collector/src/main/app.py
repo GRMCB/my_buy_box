@@ -39,7 +39,7 @@ def get_all_user_listings():
 def save_listings_to_database(all_listings):
     for listing in all_listings:
         listing_record = ListingRecord(
-            id=int(listing['MLS#']),
+            id=listing['MLS#'],
             sale_type=listing['SALE TYPE'],
             sold_date=listing['SOLD DATE'],
             property_type=listing['PROPERTY TYPE'],
@@ -47,26 +47,24 @@ def save_listings_to_database(all_listings):
             city=listing['CITY'],
             state_or_province=listing['STATE OR PROVINCE'],
             zip_or_postal_code=listing['ZIP OR POSTAL CODE'],
-            price=float(listing['PRICE']),
-            beds=int(listing['BEDS']),
-            baths=float(listing['BATHS']),
+            price=listing['PRICE'],
+            beds=listing['BEDS'],
+            baths=listing['BATHS'],
             location=listing['LOCATION'],
-            square_feet=int(listing['SQUARE FEET']),
-            lot_size=int(listing['LOT SIZE']),
-            year_built=int(listing['YEAR BUILT']),
-            days_on_market=int(listing['DAYS ON MARKET']),
-            price_per_square_feet=float(listing['$/SQUARE FEET']),
-            hoa_per_month=float(listing['HOA/MONTH']),
+            square_feet=listing['SQUARE FEET'],
+            lot_size=listing['LOT SIZE'],
+            year_built=listing['YEAR BUILT'],
+            days_on_market=listing['DAYS ON MARKET'],
+            price_per_square_feet=listing['$/SQUARE FEET'],
+            hoa_per_month=listing['HOA/MONTH'],
             status=listing['STATUS'],
             next_open_house_start_time=listing['NEXT OPEN HOUSE START TIME'],
             next_open_house_end_time=listing['NEXT OPEN HOUSE END TIME'],
             url=listing['URL (SEE https://www.redfin.com/buy-a-home/comparative-market-analysis FOR INFO ON PRICING)'],
             source=listing['SOURCE'],
-            mls_number=int(listing['MLS#']),
+            mls_number=listing['MLS#'],
             favorite=bool(listing['FAVORITE']),
             interested=bool(listing['INTERESTED']),
-            latitude=float(listing['LATITUDE']),
-            longitude=float(listing['LONGITUDE'])
         )
         db.session.add(listing_record)
         db.session.commit()
