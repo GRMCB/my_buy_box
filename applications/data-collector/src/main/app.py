@@ -103,12 +103,11 @@ def get_listings(zip_code):
     listings = db.session.query(ListingRecord).filter(ListingRecord.zip_or_postal_code == zip_code).order_by(ListingRecord.mls_number).all()
     json_listings = []
     for listing in listings:
-        print(listing.id, listing.address)
-        print('Price:', listing.price)
-        print('Zip Code:', listing.zip_or_postal_code)
-        print('URL:', listing.url)
-        print('----')
+
         json_listings = listing.to_dict()
+    print(json_listings)
+    print("=============================")
+    print(json.dumps(json_listings))
     return json.dumps(json_listings)
 
 if __name__ == '__main__':
