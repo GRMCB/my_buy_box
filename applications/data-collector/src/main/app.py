@@ -101,13 +101,7 @@ with app.app_context():
 def get_listings(zip_code):
     """Get a list of listings objects sorted by MLS number"""
     listings = db.session.query(ListingRecord).filter(ListingRecord.zip_or_postal_code == zip_code).order_by(ListingRecord.mls_number).all()
-    json_listings = []
-    for listing in listings:
 
-        json_listings.append(listing.to_dict())
-    print(json_listings)
-    print("=============================")
-    print(json.dumps(json_listings))
     return json.dumps(ListingRecord.serialize_list(listings))
 
 if __name__ == '__main__':
