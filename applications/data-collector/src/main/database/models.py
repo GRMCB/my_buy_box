@@ -26,7 +26,6 @@ class Serializer(object):
 from flask import json
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.attributes import QueryableAttribute
-from wakatime_website import app
 
 db = SQLAlchemy(app)
 
