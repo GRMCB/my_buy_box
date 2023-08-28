@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
 from sqlalchemy.orm import declarative_base
+from sqlalchemy.inspection import inspect
+
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -10,6 +12,15 @@ Base = declarative_base()
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
+class Serializer(object):
+
+    def serialize(self):
+        return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
+
+    @staticmethod
+    def serialize_list(l):
+        return [m.serialize() for m in l]
 
 class ListingRecord(db.Model):
     __tablename__ = 'listing_records'
@@ -41,6 +52,9 @@ class ListingRecord(db.Model):
     interested = Column(String(1))
     latitude = Column(String(50))
     longitude = Column(String(50))
-
+    def serialize(self):
+        d = Serializer.serialize(self)
+        del d['password']
+        return d
 def __repr__(self):
     return f'<ListingRecord {self.id}>'
