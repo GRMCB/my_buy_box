@@ -40,7 +40,7 @@ class BaseModel(db.Model):
 
         hidden = self._hidden_fields if hasattr(self, "_hidden_fields") else []
         default = self._default_fields if hasattr(self, "_default_fields") else []
-        default.extend(['id', 'modified_at', 'created_at'])
+        default.extend(["id", "modified_at", "created_at"])
 
         if not _path:
             _path = self.__tablename__.lower()
@@ -98,11 +98,7 @@ class BaseModel(db.Model):
                             )
                         )
                 else:
-                    if (
-                            self.__mapper__.relationships[key].query_class is not None
-                            or self.__mapper__.relationships[key].instrument_class
-                            is not None
-                    ):
+                    if (self.__mapper__.relationships[key].query_class is not None or self.__mapper__.relationships[key].instrument_class is not None):
                         item = getattr(self, key)
                         if item is not None:
                             ret_data[key] = item.to_dict(
@@ -139,7 +135,6 @@ class BaseModel(db.Model):
                         ret_data[key] = json.loads(json.dumps(val))
                     except:
                         pass
-
         return ret_data                        )
 
 class ListingRecord(BaseModel):
