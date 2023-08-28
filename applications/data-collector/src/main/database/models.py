@@ -134,7 +134,7 @@ class BaseModel(db.Model):
                         _hide=list(_hide),
                         _path=("%s.%s" % (_path, key.lower())),
                     )
-                    else:
+                else:
                     try:
                         ret_data[key] = json.loads(json.dumps(val))
                     except:
