@@ -28,7 +28,7 @@ def verify():
 def zip_code(zip_code):
     # Call Database Rest API to get Zip code listings
     records = requests.get(f"http://127.0.0.1:8081/api/listings/{zip_code}")
-    json_records = records.decode('utf8')
+    json_records = records.text.decode('utf8')
 
     return render_template('data.html', records=json_records)
 
