@@ -32,10 +32,12 @@ def get_all_user_listings():
 
             all_listings.extend(zipcode_listings)
 
-        save_listings_to_database(all_listings)
         return all_listings
 
-def save_listings_to_database(all_listings):
+def save_listings_to_database():
+
+    all_listings = get_all_user_listings()
+
     for listing in all_listings:
         listing_record = ListingRecord(
             id=listing['MLS#'],
@@ -71,8 +73,9 @@ def save_listings_to_database(all_listings):
 app = Flask(__name__)
 client = Redfin()
 
+save_listings_to_database()
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=get_all_user_listings, trigger="interval", minutes=10)
+scheduler.add_job(func=save_listings_to_database, trigger="interval", minutes=10)
 scheduler.start()
 
 db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
