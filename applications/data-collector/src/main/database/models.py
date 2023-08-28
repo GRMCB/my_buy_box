@@ -135,7 +135,7 @@ class BaseModel(db.Model):
                         ret_data[key] = json.loads(json.dumps(val))
                     except:
                         pass
-        return ret_data                        )
+        return ret_data
 
 class ListingRecord(BaseModel):
     __tablename__ = 'listing_records'
