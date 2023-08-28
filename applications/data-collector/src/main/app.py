@@ -70,7 +70,7 @@ def save_listings_to_database(all_listings):
 
 app = Flask(__name__)
 client = Redfin()
-
+_ = get_all_user_listings()
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=get_all_user_listings, trigger="interval", minutes=10)
 scheduler.start()
