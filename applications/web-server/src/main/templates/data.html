@@ -28,7 +28,7 @@
 <table>
   <thead>
     <tr>
-      <th>ID</th>
+      <th>MLS ID</th>
       <th>Sale Type</th>
       <th>Sold Date</th>
       <th>Property Type</th>
@@ -51,7 +51,6 @@
       <th>Next Open House End Time</th>
       <th>URL</th>
       <th>Source</th>
-      <th>MLS Number</th>
       <th>Favorite</th>
       <th>Interested</th>
       <th>Latitude</th>
@@ -62,7 +61,7 @@
   {% for record in records %}
   <tbody>
     <tr>
-      <td>{{ record['mls'] }}</td>
+      <td>{{ record['mls_number'] }}</td>
       <td>{{ record['sale_type'] }}</td>
       <td>{{ record['sold_date'] }}</td>
       <td>{{ record['property_type'] }}</td>

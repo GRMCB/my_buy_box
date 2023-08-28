@@ -67,22 +67,12 @@ def save_listings_to_database(all_listings):
         )
         db.session.add(listing_record)
         db.session.commit()
-        """
-        listings = ListingRecord.query.all()
-        for listing in listings:
-            print(listing.id, listing.address)
-            print('Price:', listing.price)
-            print('URL:', listing.url)
-            print('----')
-        """
-        # print(get_listings(zip_code))
-        # app.logger.warning(())
 
 app = Flask(__name__)
 client = Redfin()
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=10)
+scheduler.add_job(func=get_all_user_listings, trigger="interval", minutes=10)
 scheduler.start()
 
 db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
