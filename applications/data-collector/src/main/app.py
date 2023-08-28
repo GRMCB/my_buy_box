@@ -32,7 +32,6 @@ def get_all_user_listings():
 
             all_listings.extend(zipcode_listings)
 
-        print(all_listings)
         save_listings_to_database(all_listings)
         return all_listings
 
@@ -69,7 +68,6 @@ def save_listings_to_database(all_listings):
         db.session.add(listing_record)
         db.session.commit()
 
-        print(all_listings)
         # print(get_listings(zip_code))
         # app.logger.warning(())
 
@@ -98,6 +96,7 @@ def get_listings(zip_code):
     listings = db.session.query(ListingRecord).filter(ListingRecord.zip_or_postal_code == zip_code).order_by(ListingRecord.mls_number).all()
     json_listings = []
     for listing in listings:
+        print(listing)
         json_listings = listing.to_dict()
     return json.dumps(json_listings)
 
