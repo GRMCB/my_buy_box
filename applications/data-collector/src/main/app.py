@@ -95,7 +95,7 @@ with app.app_context():
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
 def get_listings(zip_code):
     """Get a list of listings objects sorted by MLS number"""
-    listings = ListingRecord.query(ListingRecord).filter(ListingRecord.zip_or_postal_code == zip_code).order_by(ListingRecord.mls_number).all()
+    listings = db.session.query(ListingRecord).filter(ListingRecord.zip_or_postal_code == zip_code).order_by(ListingRecord.mls_number).all()
     return listings
 
 if __name__ == '__main__':
