@@ -58,7 +58,7 @@
       <th>Longitude</th>
     </tr>
   </thead>
-
+  {% block content %}
   {% for record in records %}
   <tbody>
     <tr>
@@ -88,9 +88,8 @@
       <td>{{ record['mls'] }}</td>
     </tr>
   </tbody>
-
   {% endfor %}
-
+  {% endblock %}
 </table>
 
 </body>
