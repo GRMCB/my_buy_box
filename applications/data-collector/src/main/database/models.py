@@ -163,9 +163,6 @@ class ListingRecord(BaseModel):
     interested = Column(String(1))
     latitude = Column(String(50))
     longitude = Column(String(50))
-    def serialize(self):
-        d = Serializer.serialize(self)
-        del d['password']
-        return d
+
 def __repr__(self):
     return f'<ListingRecord {self.id}>'
