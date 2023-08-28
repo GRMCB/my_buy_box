@@ -67,6 +67,12 @@ def save_listings_to_database(all_listings):
         )
         db.session.add(listing_record)
         db.session.commit()
+        listings = db.session.query.all()
+        for listing in listings:
+            print(listing.id, listing.address)
+            print('Price:', listing.price)
+            print('URL:', listing.url)
+            print('----')
 
         # print(get_listings(zip_code))
         # app.logger.warning(())
@@ -82,7 +88,7 @@ db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
 
 with app.app_context():
 
-    logger.info("Running with app.app_context():");
+    logger.info("Running with app.app_context():")
 
     app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///"+db_path
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
