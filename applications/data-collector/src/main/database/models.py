@@ -133,7 +133,7 @@ class BaseModel(db.Model):
                         pass
         return ret_data
 
-class ListingRecord(BaseModel):
+class ListingRecord(db.Model):
     __tablename__ = 'listing_records'
     id = Column(String(50), primary_key=True)
     sale_type = Column(String(50))
@@ -164,5 +164,11 @@ class ListingRecord(BaseModel):
     latitude = Column(String(50))
     longitude = Column(String(50))
 
-def __repr__(self):
-    return f'<ListingRecord {self.id}>'
+    def serialize(self):
+        return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
+
+    @staticmethod
+    def serialize_list(l):
+        return [m.serialize() for m in l]
+    def __repr__(self):
+        return f'<ListingRecord {self.id}>'
