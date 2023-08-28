@@ -97,7 +97,7 @@ def get_listings(zip_code):
     """Get a list of listings objects sorted by MLS number"""
     listings = db.session.query(ListingRecord).filter(ListingRecord.zip_or_postal_code == zip_code).order_by(ListingRecord.mls_number).all()
 
-    return json.dumps(ListingRecord.serialize_list(listings))
+    return json.dumps(listings.to_dict())
 
 if __name__ == '__main__':
     load_dotenv()
