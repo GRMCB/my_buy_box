@@ -23,6 +23,13 @@ class Serializer(object):
     def serialize_list(l):
         return [m.serialize() for m in l]
 
+from flask import json
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm.attributes import QueryableAttribute
+from wakatime_website import app
+
+db = SQLAlchemy(app)
+
 class BaseModel(db.Model):
     __abstract__ = True
 
@@ -125,7 +132,7 @@ class BaseModel(db.Model):
                     ret_data[key] = val.to_dict(
                         show=list(show),
                         _hide=list(_hide), _path=("%s.%s" % (_path, key.lower()))
-                    _path=('%s.%s' % (path, key.lower())),
+                        _path=('%s.%s' % (path, key.lower())),
                     )
                     else:
                     try:
@@ -133,7 +140,7 @@ class BaseModel(db.Model):
                     except:
                         pass
 
-        return ret_data
+        return ret_data                        )
 
 class ListingRecord(BaseModel):
     __tablename__ = 'listing_records'
