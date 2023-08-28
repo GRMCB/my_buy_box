@@ -67,13 +67,14 @@ def save_listings_to_database(all_listings):
         )
         db.session.add(listing_record)
         db.session.commit()
+        """
         listings = ListingRecord.query.all()
         for listing in listings:
             print(listing.id, listing.address)
             print('Price:', listing.price)
             print('URL:', listing.url)
             print('----')
-
+        """
         # print(get_listings(zip_code))
         # app.logger.warning(())
 
@@ -102,7 +103,11 @@ def get_listings(zip_code):
     listings = db.session.query(ListingRecord).filter(ListingRecord.zip_or_postal_code == zip_code).order_by(ListingRecord.mls_number).all()
     json_listings = []
     for listing in listings:
-        print(listing)
+        print(listing.id, listing.address)
+        print('Price:', listing.price)
+        print('Zip Code:', listing.zip_or_postal_code)
+        print('URL:', listing.url)
+        print('----')
         json_listings = listing.to_dict()
     return json.dumps(json_listings)
 
