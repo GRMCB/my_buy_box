@@ -67,7 +67,7 @@ def save_listings_to_database(all_listings):
         )
         db.session.add(listing_record)
         db.session.commit()
-        listings = db.session.query.all()
+        listings = ListingRecord.query.all()
         for listing in listings:
             print(listing.id, listing.address)
             print('Price:', listing.price)
