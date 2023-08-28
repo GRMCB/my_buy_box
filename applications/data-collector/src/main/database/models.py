@@ -22,7 +22,7 @@ class Serializer(object):
     def serialize_list(l):
         return [m.serialize() for m in l]
 
-class ListingRecord(db.Model):
+class ListingRecord(db.Model, Serializer):
     __tablename__ = 'listing_records'
     id = Column(String(50), primary_key=True)
     sale_type = Column(String(50))
