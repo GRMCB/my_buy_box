@@ -104,7 +104,7 @@ def get_listings(zip_code):
     json_listings = []
     for listing in listings:
 
-        json_listings = listing.to_dict()
+        json_listings.append(listing.to_dict())
     print(json_listings)
     print("=============================")
     print(json.dumps(json_listings))
