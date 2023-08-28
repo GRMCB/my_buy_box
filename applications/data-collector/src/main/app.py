@@ -108,7 +108,7 @@ def get_listings(zip_code):
     print(json_listings)
     print("=============================")
     print(json.dumps(json_listings))
-    return json.dumps(json_listings)
+    return json_listings
 
 if __name__ == '__main__':
     load_dotenv()
