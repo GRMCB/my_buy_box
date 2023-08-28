@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.inspection import inspect
 from sqlalchemy.orm.attributes import QueryableAttribute
+from flask import json
 
 import sys
 import os
@@ -23,11 +24,7 @@ class Serializer(object):
     def serialize_list(l):
         return [m.serialize() for m in l]
 
-from flask import json
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm.attributes import QueryableAttribute
 
-db = SQLAlchemy(app)
 
 class BaseModel(db.Model):
     __abstract__ = True
