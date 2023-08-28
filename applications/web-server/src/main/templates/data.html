@@ -62,7 +62,7 @@
   {% for record in records %}
   <tbody>
     <tr>
-      <td>{{ record['id'] }}</td>
+      <td>{{ record['mls'] }}</td>
       <td>{{ record['sale_type'] }}</td>
       <td>{{ record['sold_date'] }}</td>
       <td>{{ record['property_type'] }}</td>
@@ -85,7 +85,10 @@
       <td>{{ record['next_open_house_end_time'] }}</td>
       <td>{{ record['url'] }}</td>
       <td>{{ record['source'] }}</td>
-      <td>{{ record['mls'] }}</td>
+      <td>{{ record['favorite'] }}</td>
+      <td>{{ record['interested'] }}</td>
+      <td>{{ record['longitude'] }}</td>
+      <td>{{ record['latitude'] }}</td>
     </tr>
   </tbody>
   {% endfor %}
