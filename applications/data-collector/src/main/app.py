@@ -7,13 +7,24 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from redfin import Redfin
 from dotenv import load_dotenv
 from flask_migrate import Migrate
-from main import create_app
 from database.models import db
+from flask import Flask
+from config import Config
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
 
 logger = logging.getLogger(__name__)
+
+
+def create_app(config_obj=Config):
+    app = Flask(__name__)
+    app.config.from_object(config_obj)
+
+    from database.models import db
+    db.init_app(app)
+
+    return app
 
 def load_user_listing_criteria():
     cur_path = os.path.dirname("listing_criteria.json")
