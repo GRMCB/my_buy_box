@@ -1,6 +1,5 @@
 from database.models import ListingRecord, db
 import os
-from flask import Flask
 import logging
 import atexit
 import json
@@ -8,7 +7,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from redfin import Redfin
 from dotenv import load_dotenv
 from flask_migrate import Migrate
-
+from main import create_app
+from database.models import db
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
@@ -70,25 +70,16 @@ def save_listings_to_database(all_listings):
         db.session.add(listing_record)
         db.session.commit()
 
-app = Flask(__name__)
+app = create_app()
+migrate = Migrate(app, db)
+
 client = Redfin()
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=10)
 scheduler.start()
 
-db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
-
-with app.app_context():
-
-    logger.info("Running with app.app_context():")
-
-    app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///"+db_path
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-    db.init_app(app)
-    migrate = Migrate(app, db)
-    db.create_all()
+db.create_all()
 
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
 def get_listings(zip_code):
