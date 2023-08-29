@@ -1,10 +1,6 @@
 import pytest
 from main.redfin import Redfin
 
-# def test_valid_zipcode():
-
-
-
 def test_search_all_by_zipcode(load_test_listing_criteria):
     """ This test validates the search_all_by_zipcode function in the Redfin API.
     It tests that the zipcode for the returned list of listings matches the test_listing_criteria.json file """
