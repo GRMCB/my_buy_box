@@ -1,9 +1,6 @@
 from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.inspection import inspect
-from sqlalchemy.orm.attributes import QueryableAttribute
-from flask import json
-from flask_migrate import Migrate
 
 import sys
 import os
@@ -15,7 +12,6 @@ Base = declarative_base()
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
-migrate = Migrate = (app, db)
 
 class ListingRecord(db.Model):
     __tablename__ = 'listing_records'

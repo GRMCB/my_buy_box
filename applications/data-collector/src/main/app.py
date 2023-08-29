@@ -7,6 +7,8 @@ import json
 from apscheduler.schedulers.background import BackgroundScheduler
 from redfin import Redfin
 from dotenv import load_dotenv
+from flask_migrate import Migrate
+
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
@@ -85,6 +87,7 @@ with app.app_context():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
+    migrate = Migrate(app, db)
     db.create_all()
 
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
