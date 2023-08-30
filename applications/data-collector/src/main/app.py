@@ -81,8 +81,10 @@ def save_listings_to_database(all_listings):
         db.session.add(listing_record)
         db.session.commit()
 
+db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
+
 app = create_app()
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, directory=db_path)
 
 client = Redfin()
 
