@@ -42,9 +42,9 @@ typing_extensions==4.5.0
 tzdata==2023.3
 tzlocal==2.0
 urllib3==2.0.3
+Flask-SQLAlchemy==3.0.5
 uWSGI==2.0.22
 virtualenv==20.24.2
 pytest==7.4.0
 Werkzeug==2.3.6
-Flask-SQLAlchemy==3.0.5
 SQLAlchemy==2.0.20

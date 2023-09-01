@@ -92,11 +92,6 @@ scheduler = BackgroundScheduler()
 scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=10)
 scheduler.start()
 
-with app.app_context():
-
-    logger.info("Running with app.app_context():")
-    db.create_all()
-
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
 def get_listings(zip_code):
     """Get a list of listings objects sorted by MLS number"""
