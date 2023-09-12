@@ -7,6 +7,8 @@ files:
     destination: /etc/systemd/system/
   - source: applications/data-collector/src/main/gunicorn-collector.service
     destination: /etc/systemd/system/
+  - source: applications/data-analyzer/src/main/gunicorn-analyzer.service
+    destination: /etc/systemd/system/
 hooks:
   AfterInstall:
     - location: build/venv.sh
