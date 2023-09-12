@@ -10,6 +10,7 @@ class Redfin:
     REGION_URL = 'api/region'
     INITIAL_INFO_URL = "api/home/details/initialInfo"
 
+
     def __init__(self):
         self.base = 'https://www.redfin.com/stingray/'
         self.user_agent_header = {
@@ -32,11 +33,11 @@ class Redfin:
         response.raise_for_status()
         return json.loads(response.text[4:])
 
-    def raw_request(self, url):
+    def raw_request(self, url, kwargs):
         print(self.base + url)
 
         response = requests.get(
-            self.base + url, headers=self.user_agent_header)
+            self.base + url, params=kwargs, headers=self.user_agent_header)
         response.raise_for_status()
         json_response = self.csv_to_json_dict(response.text)
 
@@ -77,9 +78,9 @@ class Redfin:
         # Replace Zipcode with Region ID in region_id field
         search_json["region_id"] = [region_id]
         params = dict(search_params, **search_json)
-        SEARCH_URL = self.createURL(Redfin.SEARCH_URL, search_json)
+        SEARCH_URL = self.createURL(Redfin.SEARCH_URL, params)
 
-        return self.raw_request(SEARCH_URL)
+        return self.raw_request(SEARCH_URL, params)
 
     # Property ID Requests
     def below_the_fold(self, property_id, **kwargs):
