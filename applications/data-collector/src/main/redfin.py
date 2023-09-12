@@ -10,28 +10,6 @@ class Redfin:
     REGION_URL = 'api/region'
     INITIAL_INFO_URL = "api/home/details/initialInfo"
 
-    # https://github.com/alientechsw/RedfinPlus/blob/master/docs/REDFIN.md
-    SEARCH_PARAMS = {
-        "al":1,
-        "status":1,
-        "region_id":29439,
-        "uipt":1,
-        "sp":True,
-        "region_type":2,
-        "page_number":1,
-        "v":8,
-        "min_parcel_size":5000,
-        "num_homes":500,
-        "min_price":500000,
-        "max_price":1500000,
-        "min_num_beds":3,
-        "min_num_baths":2,
-        "gar":True,
-        "min_num_park":2
-    }
-
-
-
     def __init__(self):
         self.base = 'https://www.redfin.com/stingray/'
         self.user_agent_header = {
@@ -99,7 +77,7 @@ class Redfin:
         # Replace Zipcode with Region ID in region_id field
         search_json["region_id"] = [region_id]
         params = dict(search_params, **search_json)
-        SEARCH_URL = self.createURL(Redfin.SEARCH_URL, params)
+        SEARCH_URL = self.createURL(Redfin.SEARCH_URL, search_json)
 
         return self.raw_request(SEARCH_URL, params)
 
