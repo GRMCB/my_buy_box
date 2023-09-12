@@ -32,11 +32,11 @@ class Redfin:
         response.raise_for_status()
         return json.loads(response.text[4:])
 
-    def raw_request(self, url, kwargs):
+    def raw_request(self, url):
         print(self.base + url)
 
         response = requests.get(
-            self.base + url, params=kwargs, headers=self.user_agent_header)
+            self.base + url, headers=self.user_agent_header)
         response.raise_for_status()
         json_response = self.csv_to_json_dict(response.text)
 
@@ -79,7 +79,7 @@ class Redfin:
         params = dict(search_params, **search_json)
         SEARCH_URL = self.createURL(Redfin.SEARCH_URL, search_json)
 
-        return self.raw_request(SEARCH_URL, params)
+        return self.raw_request(SEARCH_URL)
 
     # Property ID Requests
     def below_the_fold(self, property_id, **kwargs):
