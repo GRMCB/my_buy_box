@@ -7,4 +7,6 @@ sudo virtualenv -p python3.9 venv
 source venv/bin/activate
 sudo chmod 777 ../applications/data-collector/src/main/database
 sudo chmod 777 ../applications/data-collector/src/main/database/database.db
+sudo chmod 777 ../applications/data-analyzer/src/main/database
+sudo chmod 777 ../applications/data-analyzer/src/main/database/analyzer_database.db
 pip3 install -r requirements.txt

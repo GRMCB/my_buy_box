@@ -7,7 +7,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from redfin import Redfin
 from dotenv import load_dotenv
 from flask_migrate import Migrate
-from database.models import db
 from flask import Flask
 from config import Config
 
@@ -33,10 +32,10 @@ def load_user_listing_criteria():
     with open(user_data_path) as listing_criteria:
         user_search_criteria = json.load(listing_criteria)
         return user_search_criteria
-def get_all_user_listings():
+def get_all_user_listings_from_api():
     with app.app_context():
 
-        logger.info("Running get_all_user_listings() function to get listings from Redfin");
+        logger.info("Running get_all_user_listings_from_api() function to get listings from Redfin");
         user_search_criteria = load_user_listing_criteria()
         all_listings = []
 
@@ -45,10 +44,10 @@ def get_all_user_listings():
 
             all_listings.extend(zipcode_listings)
 
-        save_listings_to_database(all_listings)
+        save_listings_to_collector_database(all_listings)
         return all_listings
 
-def save_listings_to_database(all_listings):
+def save_listings_to_collector_database(all_listings):
     for listing in all_listings:
         listing_record = ListingRecord(
             id=listing['MLS#'],
@@ -89,7 +88,7 @@ migrate = Migrate(app, db, directory=db_path)
 client = Redfin()
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=get_all_user_listings, trigger="interval", seconds=10)
+scheduler.add_job(func=get_all_user_listings_from_api, trigger="interval", seconds=10)
 scheduler.start()
 
 with app.app_context():
@@ -98,9 +97,16 @@ with app.app_context():
     db.create_all()
 
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
-def get_listings(zip_code):
-    """Get a list of listings objects sorted by MLS number"""
+def get_listings_by_zipcode(zip_code):
+    """ Get a list of listings objects sorted by MLS number """
     listings = db.session.query(ListingRecord).filter(ListingRecord.zip_or_postal_code == zip_code).order_by(ListingRecord.mls_number).all()
+
+    return ListingRecord.serialize_list(listings)
+
+@app.route("/api/listings", methods = ['GET'])
+def get_all_listings():
+    """ Get all listings from the collector database """
+    listings = db.session.query(ListingRecord).all()
 
     return ListingRecord.serialize_list(listings)
 

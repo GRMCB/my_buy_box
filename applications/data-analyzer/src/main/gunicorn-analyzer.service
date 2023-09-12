@@ -1,0 +1,10 @@
+[Unit]
+Description=Gunicorn daemon to serve my Data Collector
+After=network.target
+[Service]
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/var/www/webapp/applications/data-analyzer/src/
+ExecStart=/bin/sh -c 'cd /var/www/webapp/build && source venv/bin/activate && cd /var/www/webapp/applications/data-analyzer/src/main && gunicorn --bind 0.0.0.0:8082 app:app'
+[Install]
+WantedBy=multi-user.target
