@@ -14,7 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class ListingRecord(db.Model):
-    __tablename__ = 'listing_records'
+    __tablename__ = 'analyzed_listing_records'
     id = Column(String(50), primary_key=True)
     sale_type = Column(String(50))
     sold_date = Column(String(50))

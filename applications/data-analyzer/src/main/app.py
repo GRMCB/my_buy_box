@@ -38,7 +38,8 @@ def get_all_listings_from_collector_database():
         logger.info("Running get_all_listings_from_collector_database() function to get listings from Data Collector App");
 
         all_listings = []
-            # Call Database Rest API to get Zip code listings
+
+        # Call Database Rest API to get Zip code listings
         records = requests.get(f"http://127.0.0.1:8081/api/listings")
         json_records = json.loads(records.text)
 
