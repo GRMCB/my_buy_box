@@ -26,14 +26,6 @@ def create_app(config_obj=Config):
 
     return app
 
-def load_user_listing_criteria():
-    cur_path = os.path.dirname("listing_criteria.json")
-    user_data_path = os.path.relpath('user_data/listing_criteria.json', cur_path)
-
-    with open(user_data_path) as listing_criteria:
-        user_search_criteria = json.load(listing_criteria)
-        return user_search_criteria
-
 def get_all_listings_from_collector_database():
     with app.app_context():
 
@@ -45,10 +37,8 @@ def get_all_listings_from_collector_database():
         records = requests.get(f"http://127.0.0.1:8081/api/listings")
         json_records = json.loads(records.text)
 
-        for zipcode, search_params in user_search_criteria["zip_code"].items():
-            zipcode_listings = client.search_all_by_zipcode(zipcode, search_params["REDFIN_SEARCH_PARAMETERS"])
-
-            all_listings.extend(zipcode_listings)
+        for listing in json_records:
+            all_listings.append(listing)
 
         return all_listings
 
@@ -123,13 +113,6 @@ with app.app_context():
 
     logger.info("Running with app.app_context():")
     # db.create_all()
-
-@app.route("/api/listings/<zip_code>", methods = ['GET'])
-def get_listings(zip_code):
-    """Get a list of listings objects sorted by MLS number"""
-    listings = db.session.query(ListingRecord).filter(ListingRecord.zip_or_postal_code == zip_code).order_by(ListingRecord.mls_number).all()
-
-    return ListingRecord.serialize_list(listings)
 
 if __name__ == '__main__':
     load_dotenv()
