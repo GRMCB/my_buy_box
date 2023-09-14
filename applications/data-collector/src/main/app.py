@@ -32,6 +32,7 @@ def load_user_listing_criteria():
     with open(user_data_path) as listing_criteria:
         user_search_criteria = json.load(listing_criteria)
         return user_search_criteria
+    
 def get_all_user_listings_from_api():
     with app.app_context():
 

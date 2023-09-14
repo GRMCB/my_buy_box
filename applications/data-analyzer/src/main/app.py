@@ -11,6 +11,7 @@ from flask_migrate import Migrate
 from flask import Flask
 from config import Config
 import requests
+from bs4 import BeautifulSoup
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
@@ -49,7 +50,11 @@ def get_rental_estimate(listing):
 
     property_id = re.search(pattern, listing["url"]).group(1)
 
-    rental_estimate = requests.get(base_url + property_id)
+    # Get the Redfin Rental Estimate from the HTML response
+    response = requests.get(base_url + property_id)
+    soup = BeautifulSoup(response, 'html.parser')
+    pattern = r'"rentalEstimateInfo\\":{[^}]*"predictedValue\\":(\d+)'
+    rental_estimate = re.findall(pattern, str(soup))
 
     return rental_estimate 
 

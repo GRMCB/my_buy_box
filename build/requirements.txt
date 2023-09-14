@@ -48,3 +48,5 @@ virtualenv==20.24.2
 pytest==7.4.0
 Werkzeug==2.3.6
 SQLAlchemy==2.0.20
+beautifulsoup4==4.12.2
+soupsieve==2.5
