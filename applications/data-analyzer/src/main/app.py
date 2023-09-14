@@ -32,6 +32,7 @@ def load_user_listing_criteria():
     with open(user_data_path) as listing_criteria:
         user_search_criteria = json.load(listing_criteria)
         return user_search_criteria
+
 def get_all_listings_from_collector_database():
     with app.app_context():
 
@@ -48,11 +49,33 @@ def get_all_listings_from_collector_database():
 
             all_listings.extend(zipcode_listings)
 
-        save_listings_to_analyzer_database(all_listings)
         return all_listings
 
-def save_listings_to_analyzer_database(all_listings):
+def get_rental_estimate(listing):
+    base_url = "https://www.redfin.com/rental-estimate?propertyId="
+
+    property_id = listing
+
+    rental_estimate = requests.get(base_url + property_id)
+
+    return rental_estimate 
+
+def analyze_all_listings():
+
+    user_listings = []
+
+    all_listings = get_all_listings_from_collector_database()
+
     for listing in all_listings:
+        rental_estimate = get_rental_estimate(listing)
+
+        if ((rental_estimate/listing["Price"]) * 100) >= 0.60:
+            user_listings.append(listing)
+
+    save_listings_to_analyzer_database(user_listings)
+
+def save_listings_to_analyzer_database(user_listings):
+    for listing in user_listings:
         listing_record = ListingRecord(
             id=listing['MLS#'],
             sale_type=listing['SALE TYPE'],

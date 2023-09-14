@@ -32,6 +32,17 @@
         "page_number": 1,
         "v": 8
       }
+    },
+    "99202": {
+      "REDFIN_SEARCH_PARAMETERS": {
+        "al": 1,
+        "status": 1,
+        "region_id": 99202,
+        "sp": true,
+        "region_type": 2,
+        "page_number": 1,
+        "v": 8
+      }
     }
   }
 }
