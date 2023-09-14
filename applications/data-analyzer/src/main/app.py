@@ -68,6 +68,7 @@ def analyze_all_listings():
 
     for listing in all_listings:
         rental_estimate = get_rental_estimate(listing)
+        print("RENTAL ESTIMATE:{}".format(rental_estimate))
 
         if ((rental_estimate/listing["Price"]) * 100) >= 0.60:
             user_listings.append(listing)
@@ -114,7 +115,7 @@ migrate = Migrate(app, db, directory=db_path)
 
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=get_all_listings_from_collector_database, trigger="interval", seconds=10)
+scheduler.add_job(func=analyze_all_listings, trigger="interval", seconds=10)
 scheduler.start()
 
 with app.app_context():
