@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from flask_migrate import Migrate
 from flask import Flask
 from config import Config
+import requests
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
