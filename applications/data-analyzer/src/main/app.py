@@ -47,7 +47,7 @@ def get_rental_estimate(listing):
     pattern = r"([^/]+)$"
     base_url = "https://www.redfin.com/rental-estimate?propertyId="
 
-    property_id = re.search(pattern, listing["URL"]).group(1)
+    property_id = re.search(pattern, listing["url"]).group(1)
 
     rental_estimate = requests.get(base_url + property_id)
 
