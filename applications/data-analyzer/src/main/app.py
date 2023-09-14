@@ -1,5 +1,6 @@
 from database.models import ListingRecord, db
 import os
+import re
 import logging
 import atexit
 import json
@@ -43,9 +44,10 @@ def get_all_listings_from_collector_database():
         return all_listings
 
 def get_rental_estimate(listing):
+    pattern = r"([^/]+)$"
     base_url = "https://www.redfin.com/rental-estimate?propertyId="
 
-    property_id = listing
+    property_id = re.search(pattern, listing["URL"]).group(1)
 
     rental_estimate = requests.get(base_url + property_id)
 
