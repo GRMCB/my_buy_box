@@ -52,9 +52,9 @@ def get_rental_estimate(listing):
 
     # Get the Redfin Rental Estimate from the HTML response
     response = requests.get(base_url + property_id)
-    soup = BeautifulSoup(response, 'html.parser')
+    # soup = BeautifulSoup(response, 'html.parser')
     pattern = r'"rentalEstimateInfo\\":{[^}]*"predictedValue\\":(\d+)'
-    rental_estimate = re.findall(pattern, str(soup))
+    rental_estimate = re.findall(pattern, response.text)[0]
 
     return rental_estimate 
 
