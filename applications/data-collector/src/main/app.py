@@ -109,7 +109,7 @@ def get_all_listings():
     """ Get all listings from the collector database """
     listings = db.session.query(ListingRecord).all()
 
-    return listings
+    return ListingRecord.serialize_list(listings)
 
 if __name__ == '__main__':
     load_dotenv()
