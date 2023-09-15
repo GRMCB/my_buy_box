@@ -29,22 +29,21 @@ def create_app(config_obj=Config):
     return app
 
 def get_all_listings_from_collector_database():
-    with app.app_context():
 
-        logger.info("Running get_all_listings_from_collector_database() function to get listings from Data Collector App");
+    logger.info("Running get_all_listings_from_collector_database() function to get listings from Data Collector App");
 
-        all_listings = []
+    all_listings = []
 
-        # Call Database Rest API to get Zip code listings
-        records = requests.get(f"http://127.0.0.1:8081/api/listings")
-        print(records)
-        json_records = json.loads(records.text)
+    # Call Database Rest API to get Zip code listings
+    records = requests.get(f"http://127.0.0.1:8081/api/listings")
+    print(records)
+    json_records = json.loads(records.text)
 
-        for listing in json_records:
-            print(listing)
-            all_listings.append(listing)
+    for listing in json_records:
+        print(listing)
+        all_listings.append(listing)
 
-        return all_listings
+    return all_listings
 
 def get_rental_estimate(listing):
     pattern = r"([^/]+)$"
@@ -64,21 +63,21 @@ def get_rental_estimate(listing):
         return None 
 
 def analyze_all_listings():
+    with app.app_context():
+        user_listings = []
 
-    user_listings = []
+        all_listings = get_all_listings_from_collector_database()
+        print(all_listings)
+        for listing in all_listings:
+            rental_estimate = get_rental_estimate(listing)
+            print("RENTAL ESTIMATE:{}".format(rental_estimate))
 
-    all_listings = get_all_listings_from_collector_database()
-    print(all_listings)
-    for listing in all_listings:
-        rental_estimate = get_rental_estimate(listing)
-        print("RENTAL ESTIMATE:{}".format(rental_estimate))
+            if rental_estimate:
 
-        if rental_estimate:
+            # if ((rental_estimate/listing["Price"]) * 100) >= 0.60:
+                user_listings.append(listing)
 
-        # if ((rental_estimate/listing["Price"]) * 100) >= 0.60:
-            user_listings.append(listing)
-
-    save_listings_to_analyzer_database(user_listings)
+        save_listings_to_analyzer_database(user_listings)
 
 def save_listings_to_analyzer_database(user_listings):
     for listing in user_listings:
