@@ -41,6 +41,7 @@ def get_all_listings_from_collector_database():
         json_records = json.loads(records.text)
 
         for listing in json_records:
+            print(listing)
             all_listings.append(listing)
 
         return all_listings
@@ -82,32 +83,32 @@ def analyze_all_listings():
 def save_listings_to_analyzer_database(user_listings):
     for listing in user_listings:
         listing_record = ListingRecord(
-            id=listing['MLS#'],
-            sale_type=listing['SALE TYPE'],
-            sold_date=listing['SOLD DATE'],
-            property_type=listing['PROPERTY TYPE'],
-            address=listing['ADDRESS'],
-            city=listing['CITY'],
-            state_or_province=listing['STATE OR PROVINCE'],
-            zip_or_postal_code=listing['ZIP OR POSTAL CODE'],
-            price=listing['PRICE'],
-            beds=listing['BEDS'],
-            baths=listing['BATHS'],
-            location=listing['LOCATION'],
-            square_feet=listing['SQUARE FEET'],
-            lot_size=listing['LOT SIZE'],
-            year_built=listing['YEAR BUILT'],
-            days_on_market=listing['DAYS ON MARKET'],
-            price_per_square_feet=listing['$/SQUARE FEET'],
-            hoa_per_month=listing['HOA/MONTH'],
-            status=listing['STATUS'],
-            next_open_house_start_time=listing['NEXT OPEN HOUSE START TIME'],
-            next_open_house_end_time=listing['NEXT OPEN HOUSE END TIME'],
-            url=listing['URL (SEE https://www.redfin.com/buy-a-home/comparative-market-analysis FOR INFO ON PRICING)'],
-            source=listing['SOURCE'],
-            mls_number=listing['MLS#'],
-            favorite=bool(listing['FAVORITE']),
-            interested=bool(listing['INTERESTED']),
+            id=listing["mls_number"],
+            sale_type=listing["sale_type"],
+            sold_date=listing["sold_date"],
+            property_type=listing["property_type"],
+            address=listing["address"],
+            city=listing["city"],
+            state_or_province=listing["state_or_province"],
+            zip_or_postal_code=listing["zip_or_postal_code"],
+            price=listing["price"],
+            beds=listing["beds"],
+            baths=listing["baths"],
+            location=listing["location"],
+            square_feet=listing["square_feet"],
+            lot_size=listing["lot_size"],
+            year_built=listing["year_built"],
+            days_on_market=listing["days_on_market"],
+            price_per_square_feet=listing["price_per_square_feet"],
+            hoa_per_month=listing["hoa_per_month"],
+            status=listing["status"],
+            next_open_house_start_time=listing["next_open_house_start_time"],
+            next_open_house_end_time=listing["next_open_house_end_time"],
+            url=listing["url"],
+            source=listing["source"],
+            mls_number=listing["mls_number"],
+            favorite=bool(listing["favorite"]),
+            interested=bool(listing["interested"]),
         )
         db.session.add(listing_record)
         db.session.commit()
