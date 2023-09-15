@@ -37,6 +37,7 @@ def get_all_listings_from_collector_database():
 
         # Call Database Rest API to get Zip code listings
         records = requests.get(f"http://127.0.0.1:8081/api/listings")
+        print(records)
         json_records = json.loads(records.text)
 
         for listing in json_records:
