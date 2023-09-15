@@ -37,7 +37,7 @@ def get_all_listings_from_collector_database():
 
         # Call Database Rest API to get Zip code listings
         records = requests.get(f"http://127.0.0.1:8081/api/listings")
-        
+        print(records)
         json_records = json.loads(records.text)
 
         for listing in json_records:
@@ -72,11 +72,11 @@ def analyze_all_listings():
         rental_estimate = get_rental_estimate(listing)
         print("RENTAL ESTIMATE:{}".format(rental_estimate))
 
-        # if rental_estimate:
+        if rental_estimate:
 
         # if ((rental_estimate/listing["Price"]) * 100) >= 0.60:
-        user_listings.append(listing)
-        print(user_listings)
+            user_listings.append(listing)
+
     save_listings_to_analyzer_database(user_listings)
 
 def save_listings_to_analyzer_database(user_listings):
