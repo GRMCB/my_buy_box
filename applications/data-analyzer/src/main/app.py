@@ -66,7 +66,7 @@ def analyze_all_listings():
     user_listings = []
 
     all_listings = get_all_listings_from_collector_database()
-
+    print(all_listings)
     for listing in all_listings:
         rental_estimate = get_rental_estimate(listing)
         print("RENTAL ESTIMATE:{}".format(rental_estimate))
