@@ -54,9 +54,12 @@ def get_rental_estimate(listing):
     response = requests.get(base_url + property_id)
     # soup = BeautifulSoup(response, 'html.parser')
     pattern = r'"rentalEstimateInfo\\":{[^}]*"predictedValue\\":(\d+)'
-    rental_estimate = re.findall(pattern, response.text)[0]
+    rental_estimate = re.findall(pattern, response.text)
 
-    return rental_estimate 
+    if rental_estimate:
+        return rental_estimate[0]
+    else:
+        return None 
 
 def analyze_all_listings():
 
@@ -68,8 +71,10 @@ def analyze_all_listings():
         rental_estimate = get_rental_estimate(listing)
         print("RENTAL ESTIMATE:{}".format(rental_estimate))
 
+        if rental_estimate:
+
         # if ((rental_estimate/listing["Price"]) * 100) >= 0.60:
-        user_listings.append(listing)
+            user_listings.append(listing)
 
     save_listings_to_analyzer_database(user_listings)
 
