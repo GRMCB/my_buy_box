@@ -74,8 +74,8 @@ def analyze_all_listings():
 
             if rental_estimate:
 
-            # if ((rental_estimate/listing["Price"]) * 100) >= 0.60:
-                user_listings.append(listing)
+                if ((rental_estimate/listing["Price"]) * 100) >= 0.60:
+                    user_listings.append(listing)
 
         save_listings_to_analyzer_database(user_listings)
 
