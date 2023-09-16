@@ -127,6 +127,20 @@ with app.app_context():
     logger.info("Running with app.app_context():")
     db.create_all()
 
+@app.route("/api/listings/<zip_code>", methods = ['GET'])
+def get_listings_by_zipcode(zip_code):
+    """ Get a list of listings objects sorted by MLS number """
+    listings = db.session.query(ListingRecord).filter(ListingRecord.zip_or_postal_code == zip_code).order_by(ListingRecord.mls_number).all()
+
+    return ListingRecord.serialize_list(listings)
+
+@app.route("/api/listings", methods = ['GET'])
+def get_all_listings():
+    """ Get all listings from the collector database """
+    listings = db.session.query(ListingRecord).all()
+
+    return ListingRecord.serialize_list(listings)
+
 if __name__ == '__main__':
     load_dotenv()
 

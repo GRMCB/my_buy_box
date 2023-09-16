@@ -29,7 +29,7 @@ def verify():
 def zip_code(zip_code):
     # Call Data Collector Rest API to get Zip code listings directly from database
     # This will change to Retrieving it from Data Analyzer database. 
-    records = requests.get(f"http://127.0.0.1:8081/api/listings/{zip_code}")
+    records = requests.get(f"http://127.0.0.1:8082/api/listings/{zip_code}")
     json_records = json.loads(records.text)
 
     return render_template('data.html', records=json_records)
