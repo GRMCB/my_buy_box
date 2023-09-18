@@ -35,10 +35,10 @@ def zip_code(zip_code):
 
     return render_template('data.html', records=json_records)
 
-"""
+
 @app.route('/health', methods = ['GET'])
 def health():
-    response = requests.get(f"http://127.0.0.1:8080/zipcode/98034")
+    response = requests.get(f"http://127.0.0.1:8080")
     if response.status_code == 200:
         resp = "System is Healthy"
 
@@ -46,7 +46,6 @@ def health():
         resp = "System is Unhealthy"
 
     return render_template('health.html', resp=resp)
-"""
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
