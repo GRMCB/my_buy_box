@@ -9,8 +9,6 @@ from helpers import valid_zipcode, load_valid_zipcodes
 
 valid_zipcodes_list = load_valid_zipcodes()
 
-health_status = True
-
 @app.route("/", methods = ['GET'])
 def home_page():
     return render_template("index.html")
@@ -36,14 +34,14 @@ def zip_code(zip_code):
 
     return render_template('data.html', records=json_records)
 
-@app.route('/health')
+@app.route('/health', methods = ['GET'])
 def health():
-    if health_status:
+    response = requests.get(f"http://127.0.0.1:8080/zipcode/12345")
+    if response.status_code == 200:
         resp = "System is Healthy"
-        # resp.status_code = 200
+
     else:
         resp = "System is Unhealthy"
-        # resp.status_code = 500
 
     return render_template('health.html', resp=resp)
 
