@@ -39,11 +39,11 @@ def zip_code(zip_code):
 @app.route('/health')
 def health():
     if health_status:
-        resp = jsonify(health="System is Healthy")
-        resp.status_code = 200
+        resp = "System is Healthy"
+        # resp.status_code = 200
     else:
-        resp = jsonify(health="System is Unhealthy")
-        resp.status_code = 500
+        resp = "System is Unhealthy"
+        # resp.status_code = 500
 
     return render_template('health.html', resp=resp)
 
