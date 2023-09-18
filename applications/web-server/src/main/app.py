@@ -36,7 +36,7 @@ def zip_code(zip_code):
 
 @app.route('/health', methods = ['GET'])
 def health():
-    response = requests.get(f"http://127.0.0.1:8080/zipcode/12345")
+    response = requests.get(f"http://127.0.0.1:8080/zipcode/98034")
     if response.status_code == 200:
         resp = "System is Healthy"
 
