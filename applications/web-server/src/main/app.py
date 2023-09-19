@@ -38,7 +38,7 @@ def zip_code(zip_code):
 @app.route('/health', methods = ['GET'])
 def health():
 
-    resp = "System is Healthy"
+    resp = "Web Server app is Healthy"
 
     return render_template('health.html', resp=resp)
 

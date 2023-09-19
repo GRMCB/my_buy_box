@@ -114,7 +114,7 @@ def get_all_listings():
 @app.route('/health', methods = ['GET'])
 def health():
 
-    resp = "System is Healthy"
+    resp = "Data Collector app is Healthy"
 
     return render_template('health.html', resp=resp)
 
