@@ -8,7 +8,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from redfin import Redfin
 from dotenv import load_dotenv
 from flask_migrate import Migrate
-from flask import Flask
+from flask import Flask, render_template
 from config import Config
 import requests
 from bs4 import BeautifulSoup
@@ -140,6 +140,13 @@ def get_all_listings():
     listings = db.session.query(ListingRecord).all()
 
     return ListingRecord.serialize_list(listings)
+
+@app.route('/health', methods = ['GET'])
+def health():
+
+    resp = "System is Healthy"
+
+    return render_template('health.html', resp=resp)
 
 if __name__ == '__main__':
     load_dotenv()
