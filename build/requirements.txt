@@ -50,3 +50,5 @@ Werkzeug==2.3.6
 SQLAlchemy==2.0.20
 beautifulsoup4==4.12.2
 soupsieve==2.5
+prometheus-client==0.17.1
+prometheus-flask-exporter==0.22.4
