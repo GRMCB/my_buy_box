@@ -9,6 +9,16 @@ app = Flask(__name__)
 app.config.from_pyfile("config.py")
 metrics = PrometheusMetrics(app)
 
+# static information as metric
+metrics.info('app_info', 'Application info', version='1.0.3')
+
+metrics.register_default(
+    metrics.counter(
+        'by_path_counter', 'Request count by request paths',
+        labels={'path': lambda: request.path}
+    )
+)
+
 from helpers import valid_zipcode, load_valid_zipcodes
 
 valid_zipcodes_list = load_valid_zipcodes()
