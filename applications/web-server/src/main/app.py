@@ -7,6 +7,8 @@ import json
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py")
+metrics = PrometheusMetrics(app)
+
 from helpers import valid_zipcode, load_valid_zipcodes
 
 valid_zipcodes_list = load_valid_zipcodes()
@@ -44,4 +46,4 @@ def health():
     return render_template('health.html', resp=resp)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=8080)
