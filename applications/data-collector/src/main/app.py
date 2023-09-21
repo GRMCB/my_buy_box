@@ -114,10 +114,10 @@ def get_all_listings():
 @app.route('/health', methods = ['GET'])
 def health():
     try:
-        db.session.query("1").from_statement(text("SELECT 18et989re8t89e8r98t")).all()
+        db.session.query("1").from_statement(text("SELECT 1")).all()
         raise Exception 
     except:
-        return render_template('health.html'), 503
+        return "", 503
 
 if __name__ == '__main__':
     load_dotenv()
