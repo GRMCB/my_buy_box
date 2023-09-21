@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 from flask_migrate import Migrate
 from flask import Flask, render_template
 from config import Config
+from sqlalchemy import text
+
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
