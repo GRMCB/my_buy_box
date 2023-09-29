@@ -4,6 +4,7 @@ from flask import Flask, redirect, render_template, request
 from prometheus_flask_exporter import PrometheusMetrics
 import requests
 import json
+import pika
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py")
@@ -34,6 +35,23 @@ def verify():
 
         if valid_zipcode(valid_zipcodes_list, 0, len(valid_zipcodes_list) -1, zip_code):
             print("VALID ZIPCODE")
+
+            # Establish a connection to a RabbitMQ server (localhost)
+            conn = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+            channel = conn.channel()
+
+            # Create queue for analyzing zipcode
+            channel.queue_declare(queue="analyze")
+
+            # Publish message to queue to analyze data
+            # Message will contain more data once more filters are added to search.
+            # Right now it analyzes only on zip code and rent_price_ratio
+            channel.basic_publish(exchange="", routing_key="analyze",
+                      body=json.dumps({
+                          "zip_code": zip_code,
+                          "rent_price_ratio": 0.6
+                      }))
+         
             zip_code_route = "/zipcode/" + str(zip_code)
             return redirect(zip_code_route)
 

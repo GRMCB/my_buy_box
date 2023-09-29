@@ -11,7 +11,8 @@ from flask_migrate import Migrate
 from flask import Flask, render_template
 from config import Config
 import requests
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
+import pika
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
@@ -45,6 +46,24 @@ def get_all_listings_from_collector_database():
 
     return all_listings
 
+def get_zipcode_listings_from_collector_database(zipcode):
+
+    logger.info("Running get_all_listings_from_collector_database() function to get listings from Data Collector App");
+
+    zipcode_listings = []
+
+    # Call Database Rest API to get Zip code listings
+    records = requests.get(f"http://127.0.0.1:8081/api/listings/{zip_code}")
+
+    print(records)
+    json_records = json.loads(records.text)
+
+    for listing in json_records:
+        print(listing)
+        zipcode_listings.append(listing)
+
+    return zipcode_listings
+
 def get_rental_estimate(listing):
     pattern = r"([^/]+)$"
     base_url = "https://www.redfin.com/rental-estimate?propertyId="
@@ -69,6 +88,23 @@ def analyze_all_listings():
         all_listings = get_all_listings_from_collector_database()
         print(all_listings)
         for listing in all_listings:
+            rental_estimate = get_rental_estimate(listing)
+            print("RENTAL ESTIMATE:{}".format(rental_estimate))
+
+            if rental_estimate:
+
+                if ((int(rental_estimate)/int(listing["price"])) * 100) >= 0.60:
+                    user_listings.append(listing)
+
+        save_listings_to_analyzer_database(user_listings)
+
+def analyze_zipcode_listings(zipcode):
+    with app.app_context():
+        user_listings = []
+
+        zipcode_listings = get_zipcode_listings_from_collector_database(zipcode)
+        print(zipcode_listings)
+        for listing in zipcode_listings:
             rental_estimate = get_rental_estimate(listing)
             print("RENTAL ESTIMATE:{}".format(rental_estimate))
 
@@ -117,10 +153,29 @@ db_path = os.path.join(os.path.dirname(__file__), 'database', 'analyzer_database
 app = create_app()
 migrate = Migrate(app, db, directory=db_path)
 
+# Message Queue will replace schedular 
+# analyze_all_listings() will run when message is consumed in queue
+# scheduler = BackgroundScheduler()
+# scheduler.add_job(func=analyze_all_listings, trigger="interval", seconds=10)
+# scheduler.start()
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(func=analyze_all_listings, trigger="interval", seconds=10)
-scheduler.start()
+# Message Queue
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+channel = connection.channel()
+
+channel.queue_declare(queue='analyze')
+
+def callback(ch, method, properties, body):
+    body = json.loads(body)
+    print(" [x] Received %r" % body)
+    analyze_zipcode_listings(body["zipcode"])
+
+
+channel.basic_consume(queue='analyze', on_message_callback=callback, auto_ack=True)
+
+print(' [*] Waiting for messages. To exit press CTRL+C')
+channel.start_consuming()
+# End of Message Queue code
 
 with app.app_context():
 
@@ -155,4 +210,4 @@ if __name__ == '__main__':
 
     app.run(debug=True, host='0.0.0.0')
 
-    atexit.register(scheduler.shutdown)
+    # atexit.register(scheduler.shutdown)
