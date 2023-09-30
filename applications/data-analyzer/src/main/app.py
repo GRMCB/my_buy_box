@@ -46,7 +46,7 @@ def get_all_listings_from_collector_database():
 
     return all_listings
 
-def get_zipcode_listings_from_collector_database(zipcode):
+def get_zipcode_listings_from_collector_database(zip_code):
 
     logger.info("Running get_all_listings_from_collector_database() function to get listings from Data Collector App");
 
