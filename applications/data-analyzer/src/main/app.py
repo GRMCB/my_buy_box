@@ -159,24 +159,6 @@ migrate = Migrate(app, db, directory=db_path)
 # scheduler.add_job(func=analyze_all_listings, trigger="interval", seconds=10)
 # scheduler.start()
 
-# Message Queue
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-channel = connection.channel()
-
-channel.queue_declare(queue='analyze')
-
-def callback(ch, method, properties, body):
-    body = json.loads(body)
-    print(" [x] Received %r" % body)
-    analyze_zipcode_listings(body["zip_code"])
-
-
-channel.basic_consume(queue='analyze', on_message_callback=callback, auto_ack=True)
-
-print(' [*] Waiting for messages. To exit press CTRL+C')
-channel.start_consuming()
-# End of Message Queue code
-
 with app.app_context():
 
     logger.info("Running with app.app_context():")
@@ -184,6 +166,25 @@ with app.app_context():
 
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
 def get_listings_by_zipcode(zip_code):
+
+    # Message Queue
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    channel = connection.channel()
+
+    channel.queue_declare(queue='analyze')
+
+    def callback(ch, method, properties, body):
+        body = json.loads(body)
+        print(" [x] Received %r" % body)
+        analyze_zipcode_listings(body["zip_code"])
+
+
+    channel.basic_consume(queue='analyze', on_message_callback=callback, auto_ack=True)
+
+    print(' [*] Waiting for messages. To exit press CTRL+C')
+    channel.start_consuming()
+    # End of Message Queue code
+
     """ Get a list of listings objects sorted by MLS number """
     listings = db.session.query(ListingRecord).filter(ListingRecord.zip_or_postal_code == zip_code).order_by(ListingRecord.mls_number).all()
 
