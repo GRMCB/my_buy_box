@@ -57,7 +57,7 @@ def verify():
             conn.close()
 
             zip_code_route = "/zipcode/" + str(zip_code)
-            time.sleep(1)
+            time.sleep(5)
             return redirect(zip_code_route)
 
         return render_template("invalid.html", zip_code=zip_code)
