@@ -5,6 +5,8 @@ from prometheus_flask_exporter import PrometheusMetrics
 import requests
 import json
 import pika
+import time
+
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py")
@@ -55,6 +57,7 @@ def verify():
             conn.close()
 
             zip_code_route = "/zipcode/" + str(zip_code)
+            time.sleep(1)
             return redirect(zip_code_route)
 
         return render_template("invalid.html", zip_code=zip_code)
