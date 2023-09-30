@@ -51,7 +51,9 @@ def verify():
                           "zip_code": zip_code,
                           "rent_price_ratio": 0.6
                       }))
-         
+
+            conn.close()
+
             zip_code_route = "/zipcode/" + str(zip_code)
             return redirect(zip_code_route)
 
