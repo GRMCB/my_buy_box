@@ -102,7 +102,7 @@ def analyze_zipcode_listings(zipcode):
     with app.app_context():
         user_listings = []
 
-        zipcode_listings = get_all_listings_from_collector_database()
+        zipcode_listings = get_zipcode_listings_from_collector_database()
         print(zipcode_listings)
         for listing in zipcode_listings:
             rental_estimate = get_rental_estimate(listing)
@@ -155,9 +155,9 @@ migrate = Migrate(app, db, directory=db_path)
 
 # Message Queue will replace schedular 
 # analyze_all_listings() will run when message is consumed in queue
-# scheduler = BackgroundScheduler()
-# scheduler.add_job(func=analyze_all_listings, trigger="interval", seconds=10)
-# scheduler.start()
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=analyze_all_listings, trigger="interval", seconds=10)
+scheduler.start()
 
 def callback(ch, method, properties, body):
     body = json.loads(body)
@@ -170,6 +170,7 @@ with app.app_context():
     db.create_all()
 
     # Message Queue
+    """
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', heartbeat=36000))
     channel = connection.channel()
     channel.basic_qos(prefetch_count=1)
@@ -180,6 +181,7 @@ with app.app_context():
     print(' [*] Waiting for messages. To exit press CTRL+C')
     channel.start_consuming()
     # End of Message Queue code
+    """
 
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
 def get_listings_by_zipcode(zip_code):
@@ -209,4 +211,4 @@ if __name__ == '__main__':
 
     app.run(debug=True, host='0.0.0.0')
 
-    # atexit.register(scheduler.shutdown)
+    atexit.register(scheduler.shutdown)
