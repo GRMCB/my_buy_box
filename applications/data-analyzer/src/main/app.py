@@ -169,7 +169,7 @@ channel.queue_declare(queue='analyze')
 def callback(ch, method, properties, body):
     body = json.loads(body)
     print(" [x] Received %r" % body)
-    analyze_zipcode_listings(body["zip_code"])
+    analyze_all_listings()
 
 
 channel.basic_consume(queue='analyze', on_message_callback=callback, auto_ack=True)
