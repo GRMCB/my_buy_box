@@ -102,7 +102,7 @@ def analyze_zipcode_listings(zipcode):
     with app.app_context():
         user_listings = []
 
-        zipcode_listings = get_zipcode_listings_from_collector_database(zipcode)
+        zipcode_listings = get_all_listings_from_collector_database()
         print(zipcode_listings)
         for listing in zipcode_listings:
             rental_estimate = get_rental_estimate(listing)
@@ -159,29 +159,27 @@ migrate = Migrate(app, db, directory=db_path)
 # scheduler.add_job(func=analyze_all_listings, trigger="interval", seconds=10)
 # scheduler.start()
 
-# Message Queue
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', heartbeat=36000))
-channel = connection.channel()
-channel.basic_qos(prefetch_count=1)
-
-channel.queue_declare(queue='analyze')
-
 def callback(ch, method, properties, body):
     body = json.loads(body)
     print(" [x] Received %r" % body)
     analyze_all_listings()
 
-
-channel.basic_consume(queue='analyze', on_message_callback=callback, auto_ack=True)
-
-print(' [*] Waiting for messages. To exit press CTRL+C')
-channel.start_consuming()
-# End of Message Queue code
-
 with app.app_context():
 
     logger.info("Running with app.app_context():")
     db.create_all()
+
+    # Message Queue
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', heartbeat=36000))
+    channel = connection.channel()
+    channel.basic_qos(prefetch_count=1)
+
+    channel.queue_declare(queue='analyze')
+    channel.basic_consume(queue='analyze', on_message_callback=callback, auto_ack=True)
+
+    print(' [*] Waiting for messages. To exit press CTRL+C')
+    channel.start_consuming()
+    # End of Message Queue code
 
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
 def get_listings_by_zipcode(zip_code):
