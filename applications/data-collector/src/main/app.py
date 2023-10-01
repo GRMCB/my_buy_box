@@ -18,6 +18,25 @@ logging.basicConfig(level=logging.DEBUG,
 logger = logging.getLogger(__name__)
 
 
+def publish_message_to_queue():
+    # Establish a connection to a RabbitMQ server (localhost)
+    conn = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+    channel = conn.channel()
+
+    # Create queue for analyzing zipcode
+    channel.queue_declare(queue="analyze")
+
+    # Publish message to queue to analyze data
+    # Message will contain more data once more filters are added to search.
+    # Right now it analyzes only on zip code and rent_price_ratio
+    channel.basic_publish(exchange="", routing_key="analyze",
+                body=json.dumps({
+                    "zip_code": zip_code,
+                    "rent_price_ratio": 0.6
+                }))
+
+    conn.close()
+
 def create_app(config_obj=Config):
     app = Flask(__name__)
     app.config.from_object(config_obj)
@@ -48,6 +67,9 @@ def get_all_user_listings_from_api():
             all_listings.extend(zipcode_listings)
 
         save_listings_to_collector_database(all_listings)
+
+        publish_message_to_queue()
+        
         return all_listings
 
 def save_listings_to_collector_database(all_listings):
