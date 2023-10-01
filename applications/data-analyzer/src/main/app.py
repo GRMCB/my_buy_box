@@ -12,7 +12,8 @@ from flask import Flask, render_template
 from config import Config
 import requests
 # from bs4 import BeautifulSoup
-import pika
+from consumer import consume
+from threading import Thread
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
@@ -155,33 +156,14 @@ migrate = Migrate(app, db, directory=db_path)
 
 # Message Queue will replace schedular 
 # analyze_all_listings() will run when message is consumed in queue
-scheduler = BackgroundScheduler()
-scheduler.add_job(func=analyze_all_listings, trigger="interval", seconds=10)
-scheduler.start()
-
-def callback(ch, method, properties, body):
-    body = json.loads(body)
-    print(" [x] Received %r" % body)
-    analyze_all_listings()
+# scheduler = BackgroundScheduler()
+# scheduler.add_job(func=analyze_all_listings, trigger="interval", seconds=10)
+# scheduler.start()
 
 with app.app_context():
 
     logger.info("Running with app.app_context():")
     db.create_all()
-
-    # Message Queue
-    """
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', heartbeat=36000))
-    channel = connection.channel()
-    channel.basic_qos(prefetch_count=1)
-
-    channel.queue_declare(queue='analyze')
-    channel.basic_consume(queue='analyze', on_message_callback=callback, auto_ack=True)
-
-    print(' [*] Waiting for messages. To exit press CTRL+C')
-    channel.start_consuming()
-    # End of Message Queue code
-    """
 
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
 def get_listings_by_zipcode(zip_code):
@@ -209,6 +191,9 @@ if __name__ == '__main__':
 
     logger.info("Running if __name__ == '__main__'");
 
-    app.run(debug=True, host='0.0.0.0')
+    # app.run(debug=True, host='0.0.0.0')
+    Thread(target=app.run, debug=True, host='0.0.0.0', kwargs={'use_reloader': False}).start()
 
-    atexit.register(scheduler.shutdown)
+    Thread(target=consume).start()
+
+    #atexit.register(scheduler.shutdown)
