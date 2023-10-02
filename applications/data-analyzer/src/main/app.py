@@ -13,6 +13,7 @@ from config import Config
 import requests
 # from bs4 import BeautifulSoup
 from threading import Thread
+import pika
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
