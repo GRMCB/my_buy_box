@@ -3,6 +3,7 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.inspection import inspect
 from sqlalchemy.dialects.postgresql import insert
 from dataclasses import asdict
+from sqlalchemy.dialects.sqlite import insert as sqlite_upsert
 
 import sys
 import os
@@ -16,17 +17,16 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-def upsert(session, model, row):
-    table = model.__table__
+def upsert(session, ListingRecord, row):
+    table = ListingRecord.__table__
 
-    stmt = insert(table).values(row.asdict())
+    # stmt = insert(table).values(row.asdict())
+    stmt = sqlite_upsert(table).values(row.asdict())
 
-    on_conflict_stmt = stmt.on_conflict_do_update(
-        index_elements=table.primary_key.columns,
-        set_=stmt.excluded
-        )
+    stmt = stmt.on_conflict_do_update(index_elements=[ListingRecord.id], set_=stmt.excluded)
 
-    session.execute(on_conflict_stmt)
+    # session.execute(on_conflict_stmt)
+    session.execute(stmt)
 
 
 class ListingRecord(db.Model):
