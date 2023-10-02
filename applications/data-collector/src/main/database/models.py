@@ -63,6 +63,9 @@ class ListingRecord(db.Model):
     def serialize(self):
         return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
 
+    def asdict(self):
+        return {k: v for k, v in self.__dict__.items() if k != 'favorite' and k != 'interested'}
+    
     @staticmethod
     def serialize_list(l):
         return [m.serialize() for m in l]
