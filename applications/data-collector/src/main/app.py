@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.DEBUG,
 logger = logging.getLogger(__name__)
 
 
-def publish_message_to_queue(zip_code):
+def publish_message_to_queue():
     # Establish a connection to a RabbitMQ server (localhost)
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1', heartbeat=36000))
     channel = connection.channel()
