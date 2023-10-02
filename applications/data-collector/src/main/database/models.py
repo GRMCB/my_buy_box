@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.inspection import inspect
+from sqlalchemy.dialects.postgresql import insert
 
 import sys
 import os
