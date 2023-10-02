@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.DEBUG,
 logger = logging.getLogger(__name__)
 
 
-def publish_message_to_queue():
+def publish_message_to_queue(zip_code):
     # Establish a connection to a RabbitMQ server (localhost)
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1', heartbeat=36000))
     channel = connection.channel()
@@ -32,7 +32,7 @@ def publish_message_to_queue():
     # Right now it analyzes only on zip code and rent_price_ratio
     channel.basic_publish(exchange="", routing_key="analyze",
                 body=json.dumps({
-                    "zip_code": zip_code,
+                    "zip_code": "TEST",
                     "rent_price_ratio": 0.6
                 }))
 
