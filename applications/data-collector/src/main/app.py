@@ -10,7 +10,7 @@ from flask_migrate import Migrate
 from flask import Flask, render_template
 from config import Config
 from sqlalchemy import text
-
+import pika
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
@@ -69,7 +69,7 @@ def get_all_user_listings_from_api():
         save_listings_to_collector_database(all_listings)
 
         publish_message_to_queue()
-        
+
         return all_listings
 
 def save_listings_to_collector_database(all_listings):
