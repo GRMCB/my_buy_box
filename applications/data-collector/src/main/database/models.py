@@ -13,6 +13,25 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
+def upsert(session, model, rows, no_update_cols=[]):
+    table = model.__table__
+
+    stmt = insert(table).values(rows)
+
+    update_cols = [c.name for c in table.c
+                   if c not in list(table.primary_key.columns)
+                   and c.name not in no_update_cols]
+
+    on_conflict_stmt = stmt.on_conflict_do_update(
+        index_elements=table.primary_key.columns,
+        set_={k: getattr(stmt.excluded, k) for k in update_cols}
+        )
+
+    print(compile_query(on_conflict_stmt))
+    session.execute(on_conflict_stmt)
+
+
 class ListingRecord(db.Model):
     __tablename__ = 'listing_records'
     id = Column(String(50), primary_key=True)

@@ -1,4 +1,4 @@
-from database.models import ListingRecord, db
+from database.models import ListingRecord, db, upsert
 import os
 import logging
 import atexit
@@ -103,7 +103,8 @@ def save_listings_to_collector_database(all_listings):
             favorite=bool(listing['FAVORITE']),
             interested=bool(listing['INTERESTED']),
         )
-        db.session.add(listing_record)
+        # db.session.add(listing_record)
+        upsert(db.session, ListingRecord, listing_record)
         db.session.commit()
 
 db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
