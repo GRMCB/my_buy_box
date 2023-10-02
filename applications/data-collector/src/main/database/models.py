@@ -15,18 +15,14 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-def upsert(session, model, rows, no_update_cols=[]):
-    table = model.__tablename__
+def upsert(session, model, row):
+    table = model.__table__
 
-    stmt = insert(table).values(rows)
-
-    update_cols = [c.name for c in table.c
-                   if c not in list(table.primary_key.columns)
-                   and c.name not in no_update_cols]
+    stmt = insert(table).values(row)
 
     on_conflict_stmt = stmt.on_conflict_do_update(
         index_elements=table.primary_key.columns,
-        set_={k: getattr(stmt.excluded, k) for k in update_cols}
+        set_=stmt.excluded
         )
 
     print(compile_query(on_conflict_stmt))
