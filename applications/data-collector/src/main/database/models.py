@@ -16,7 +16,7 @@ db = SQLAlchemy()
 
 
 def upsert(session, model, rows, no_update_cols=[]):
-    table = model.__table__
+    table = model.__tablename__
 
     stmt = insert(table).values(rows)
 
