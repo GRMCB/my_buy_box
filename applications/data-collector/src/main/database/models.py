@@ -20,12 +20,13 @@ db = SQLAlchemy()
 def upsert(session, ListingRecord, row):
     table = ListingRecord.__table__
 
-    # stmt = insert(table).values(row.asdict())
-    stmt = sqlite_upsert(table).values(row.asdict())
+    # Exclude unconsumed column names
+    column_names = table.columns.keys()
+    fixed = [{k: v for k, v in d.items() if k in column_names} for d in [row.asdict()]]
 
+    stmt = sqlite_upsert(table).values(fixed)
     stmt = stmt.on_conflict_do_update(index_elements=[ListingRecord.id], set_=stmt.excluded)
 
-    # session.execute(on_conflict_stmt)
     session.execute(stmt)
 
 
