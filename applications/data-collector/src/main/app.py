@@ -20,8 +20,9 @@ logger = logging.getLogger(__name__)
 
 def publish_message_to_queue():
     # Establish a connection to a RabbitMQ server (localhost)
-    conn = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
-    channel = conn.channel()
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1', heartbeat=36000))
+    channel = connection.channel()
+    channel.basic_qos(prefetch_count=1)
 
     # Create queue for analyzing zipcode
     channel.queue_declare(queue="analyze")
@@ -35,7 +36,7 @@ def publish_message_to_queue():
                     "rent_price_ratio": 0.6
                 }))
 
-    conn.close()
+    connection.close()
 
 def create_app(config_obj=Config):
     app = Flask(__name__)

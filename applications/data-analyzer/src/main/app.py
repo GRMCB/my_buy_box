@@ -36,7 +36,7 @@ def callback(ch, method, properties, body):
 
 def consume():
     # Message Queue
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', heartbeat=36000))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1', heartbeat=36000))
     channel = connection.channel()
     channel.basic_qos(prefetch_count=1)
 
