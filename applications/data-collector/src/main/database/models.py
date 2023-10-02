@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.inspection import inspect
 from sqlalchemy.dialects.postgresql import insert
+from dataclasses import asdict
 
 import sys
 import os
@@ -18,14 +19,13 @@ db = SQLAlchemy()
 def upsert(session, model, row):
     table = model.__table__
 
-    stmt = insert(table).values(row)
+    stmt = insert(table).values(row.asdict())
 
     on_conflict_stmt = stmt.on_conflict_do_update(
         index_elements=table.primary_key.columns,
         set_=stmt.excluded
         )
 
-    print(compile_query(on_conflict_stmt))
     session.execute(on_conflict_stmt)
 
 
