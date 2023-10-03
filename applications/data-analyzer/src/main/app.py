@@ -41,10 +41,10 @@ def consume():
         # Message Queue
         connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1'))
         channel = connection.channel()
-        channel.basic_qos(prefetch_count=1)
+        # channel.basic_qos(prefetch_count=1)
 
-        channel.queue_declare(queue='analyze')
-        channel.basic_consume(queue='analyze', on_message_callback=callback, auto_ack=False)
+        channel.queue_declare(queue="analyze")
+        channel.basic_consume(queue="analyze", on_message_callback=callback, auto_ack=True)
 
         print(' [*] Waiting for messages. To exit press CTRL+C')
         channel.start_consuming()

@@ -27,7 +27,7 @@ def publish_message_to_queue():
 
     # connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1'))
     channel = connection.channel()
-    channel.basic_qos(prefetch_count=1)
+    # channel.basic_qos(prefetch_count=1)
 
     # Create queue for analyzing zipcode
     channel.queue_declare(queue="analyze")
