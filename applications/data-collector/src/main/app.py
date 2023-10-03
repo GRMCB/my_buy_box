@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 def publish_message_to_queue():
     # Establish a connection to a RabbitMQ server (localhost)
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1', heartbeat=36000))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1'))
     channel = connection.channel()
     channel.basic_qos(prefetch_count=1)
 
