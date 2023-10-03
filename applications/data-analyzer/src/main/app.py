@@ -211,10 +211,11 @@ if __name__ == '__main__':
 
     logger.info("Running if __name__ == '__main__'");
 
+    Thread(target=consume).start()
+    
     app.run(debug=True, host='0.0.0.0')
     # Thread(target=app.run, debug=True, host='0.0.0.0', kwargs={'use_reloader': False}).start()
 
-    # Thread(target=consume).start()
-    consume()
     
+
     #atexit.register(scheduler.shutdown)
