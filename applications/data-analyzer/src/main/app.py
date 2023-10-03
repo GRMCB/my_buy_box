@@ -1,4 +1,4 @@
-from database.models import ListingRecord, db
+from database.models import ListingRecord, db, upsert
 import os
 import re
 import logging
@@ -88,6 +88,7 @@ def get_zipcode_listings_from_collector_database(zip_code):
 def get_rental_estimate(listing):
     pattern = r"([^/]+)$"
     base_url = "https://www.redfin.com/rental-estimate?propertyId="
+    logger.info("Running get_rental_estimate() function");
 
     property_id = re.search(pattern, listing["url"]).group(1)
 
@@ -105,6 +106,7 @@ def get_rental_estimate(listing):
 def analyze_all_listings():
     with app.app_context():
         user_listings = []
+        logger.info("Running analyze_all_listings() function");
 
         all_listings = get_all_listings_from_collector_database()
         print(all_listings)
@@ -166,7 +168,8 @@ def save_listings_to_analyzer_database(user_listings):
             favorite=bool(listing["favorite"]),
             interested=bool(listing["interested"]),
         )
-        db.session.add(listing_record)
+        # db.session.add(listing_record)
+        upsert(db.session, ListingRecord, listing_record)
         db.session.commit()
 
 db_path = os.path.join(os.path.dirname(__file__), 'database', 'analyzer_database.db')

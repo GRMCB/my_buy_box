@@ -13,6 +13,18 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+def upsert(session, ListingRecord, row):
+    table = ListingRecord.__table__
+
+    # Exclude unconsumed column names
+    column_names = table.columns.keys()
+    fixed = [{k: v for k, v in d.items() if k in column_names} for d in [row.asdict()]]
+
+    stmt = sqlite_upsert(table).values(fixed)
+    stmt = stmt.on_conflict_do_update(index_elements=[ListingRecord.id], set_=stmt.excluded)
+
+    session.execute(stmt)
+
 class ListingRecord(db.Model):
     __tablename__ = 'analyzed_listing_records'
     id = Column(String(50), primary_key=True)
@@ -47,6 +59,9 @@ class ListingRecord(db.Model):
     def serialize(self):
         return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
 
+    def asdict(self):
+        return {k: v for k, v in self.__dict__.items() if k != 'favorite' and k != 'interested'}
+    
     @staticmethod
     def serialize_list(l):
         return [m.serialize() for m in l]
