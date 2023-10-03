@@ -35,6 +35,7 @@ def publish_message_to_queue():
     # Publish message to queue to analyze data
     # Message will contain more data once more filters are added to search.
     # Right now it analyzes only on zip code and rent_price_ratio
+    logger.info("Publishing message to 'analyze' queue");
     channel.basic_publish(exchange="", routing_key="analyze",
                 body=json.dumps({
                     "zip_code": "TEST",
