@@ -184,6 +184,7 @@ migrate = Migrate(app, db, directory=db_path)
 with app.app_context():
 
     logger.info("Running with app.app_context():")
+    Thread(target=consume).start()
     db.create_all()
 
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
@@ -211,8 +212,8 @@ if __name__ == '__main__':
 
     logger.info("Running if __name__ == '__main__'");
 
-    Thread(target=consume).start()
     
+
     app.run(debug=True, host='0.0.0.0')
     # Thread(target=app.run, debug=True, host='0.0.0.0', kwargs={'use_reloader': False}).start()
 
