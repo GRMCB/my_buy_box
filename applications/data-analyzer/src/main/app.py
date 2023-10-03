@@ -47,6 +47,7 @@ def consume():
         channel.basic_consume(queue="analyze", on_message_callback=callback, auto_ack=True)
 
         print(' [*] Waiting for messages. To exit press CTRL+C')
+        logger.info("Waiting for messages to consume...");
         channel.start_consuming()
         # End of Message Queue code
 
