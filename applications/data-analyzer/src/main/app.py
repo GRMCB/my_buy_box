@@ -208,13 +208,13 @@ def health():
     return render_template('health.html', resp=resp)
 
 if __name__ == '__main__':
-    load_dotenv()
 
     logger.info("Running if __name__ == '__main__'");
 
-    # app.run(debug=True, host='0.0.0.0')
-    Thread(target=app.run, debug=True, host='0.0.0.0', kwargs={'use_reloader': False}).start()
+    app.run(debug=True, host='0.0.0.0')
+    # Thread(target=app.run, debug=True, host='0.0.0.0', kwargs={'use_reloader': False}).start()
 
-    Thread(target=consume).start()
-
+    # Thread(target=consume).start()
+    consume()
+    
     #atexit.register(scheduler.shutdown)
