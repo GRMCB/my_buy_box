@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.inspection import inspect
+from sqlalchemy.dialects.sqlite import insert as sqlite_upsert
 
 import sys
 import os
