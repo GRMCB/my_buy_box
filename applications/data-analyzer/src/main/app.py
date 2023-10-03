@@ -34,7 +34,6 @@ def callback(ch, method, properties, body):
     body = json.loads(body)
     print(" [x] Received %r" % body)
     analyze_all_listings()
-    ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def consume():
     with app.app_context():
