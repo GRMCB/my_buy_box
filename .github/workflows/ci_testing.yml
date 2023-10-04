@@ -36,3 +36,5 @@ jobs:
         run: python3 -m pytest ./applications/web-server/ -v
       - name: Run data-collector tests
         run: python3 -m pytest ./applications/data-collector/ -v
+      - name: Run data-analyzer tests
+        run: python3 -m pytest ./applications/data-analyzer/ -v
