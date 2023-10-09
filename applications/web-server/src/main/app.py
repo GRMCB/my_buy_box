@@ -2,9 +2,9 @@
 
 from flask import Flask, redirect, render_template, request
 from prometheus_flask_exporter import PrometheusMetrics
+from utils import valid_zipcode, load_valid_zipcodes
 import requests
 import json
-import pika
 import time
 
 
@@ -21,8 +21,6 @@ metrics.register_default(
         labels={'path': lambda: request.path}
     )
 )
-
-from helpers import valid_zipcode, load_valid_zipcodes
 
 valid_zipcodes_list = load_valid_zipcodes()
 
