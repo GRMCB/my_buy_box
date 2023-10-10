@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from utils import valid_zipcode
 
 def test_invalid_zipcode(load_valid_zipcodes):

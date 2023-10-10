@@ -1,16 +1,12 @@
-from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, String
 from sqlalchemy.inspection import inspect
 from sqlalchemy.dialects.sqlite import insert as sqlite_upsert
+from flask_sqlalchemy import SQLAlchemy
 
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../main")))
-
-Base = declarative_base()
-
-from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 

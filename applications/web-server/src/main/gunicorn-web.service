@@ -1,5 +1,5 @@
 [Unit]
-Description=Gunicorn daemon to serve my Web Server
+Description=Gunicorn daemon to serve Web Server app
 After=network.target
 [Service]
 User=ec2-user

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from database.models import ListingRecord, db, upsert
 import os
 import logging
@@ -27,7 +29,7 @@ def publish_message_to_queue():
 
     # connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1'))
     channel = connection.channel()
-    # channel.basic_qos(prefetch_count=1)
+    channel.basic_qos(prefetch_count=1)
 
     # Create queue for analyzing zipcode
     channel.queue_declare(queue="analyze")
@@ -109,7 +111,6 @@ def save_listings_to_collector_database(all_listings):
             favorite=bool(listing['FAVORITE']),
             interested=bool(listing['INTERESTED']),
         )
-        # db.session.add(listing_record)
         upsert(db.session, ListingRecord, listing_record)
         db.session.commit()
 

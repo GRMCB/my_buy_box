@@ -2,22 +2,16 @@ from database.models import ListingRecord, db, upsert
 import os
 import re
 import logging
-import atexit
 import json
-from apscheduler.schedulers.background import BackgroundScheduler
-from redfin import Redfin
-from dotenv import load_dotenv
 from flask_migrate import Migrate
 from flask import Flask, render_template
 from config import Config
 import requests
-# from bs4 import BeautifulSoup
 from threading import Thread
 import pika
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
-
 logger = logging.getLogger(__name__)
 
 
@@ -214,11 +208,5 @@ if __name__ == '__main__':
 
     logger.info("Running if __name__ == '__main__'");
 
-    
-
     app.run(debug=True, host='0.0.0.0')
     # Thread(target=app.run, debug=True, host='0.0.0.0', kwargs={'use_reloader': False}).start()
-
-    
-
-    #atexit.register(scheduler.shutdown)

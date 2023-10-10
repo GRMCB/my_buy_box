@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""
+This class is mainly built from https://github.com/reteps/redfin
+"""
 import requests
 import json
 import csv
@@ -10,13 +14,11 @@ class Redfin:
     REGION_URL = 'api/region'
     INITIAL_INFO_URL = "api/home/details/initialInfo"
 
-
     def __init__(self):
         self.base = 'https://www.redfin.com/stingray/'
         self.user_agent_header = {
             'user-agent': 'redfin'
         }
-
 
     def meta_property(self, url, kwargs, page=False):
         if page:
@@ -118,7 +120,6 @@ class Redfin:
         return self.meta_request('do/tourlist/getDatePickerData', {'listingId': listing_id, **kwargs})
 
     # Table ID Requests
-
     def shared_region(self, table_id, **kwargs):
         return self.meta_request('api/region/shared-region-info', {'tableId': table_id, 'regionTypeId': 2, 'mapPageTypeId': 1, **kwargs})
 
@@ -180,4 +181,3 @@ class Redfin:
         json_dict = json.loads(json_data)
 
         return json_dict
-
