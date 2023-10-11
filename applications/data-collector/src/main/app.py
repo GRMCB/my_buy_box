@@ -25,12 +25,12 @@ logger = logging.getLogger(__name__)
 def open_pika_connection():
 
     # Establish a connection to a RabbitMQ server (localhost)
-    url = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost/%2f')
-    params = pika.URLParameters(url)
-    params.socket_timeout = 5
-    connection = pika.BlockingConnection(params)
+    # url = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost/%2f')
+    # params = pika.URLParameters(url)
+    # params.socket_timeout = 5
+    # connection = pika.BlockingConnection(params)
 
-    # connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1', heartbeat=10))
     channel = connection.channel()
     channel.basic_qos(prefetch_count=1)
 
