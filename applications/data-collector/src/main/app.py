@@ -30,7 +30,7 @@ def open_pika_connection():
     # params.socket_timeout = 5
     # connection = pika.BlockingConnection(params)
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1', heartbeat=10))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1', heartbeat=3600))
     channel = connection.channel()
     channel.basic_qos(prefetch_count=1)
 

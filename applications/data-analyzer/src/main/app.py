@@ -32,7 +32,7 @@ def callback(ch, method, properties, body):
 def consume():
     with app.app_context():
         # Message Queue
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1', heartbeat=10))
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1', heartbeat=3600))
         channel = connection.channel()
         channel.basic_qos(prefetch_count=1)
 
