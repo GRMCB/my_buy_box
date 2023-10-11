@@ -13,6 +13,7 @@ from flask import Flask, render_template
 from config import Config
 from sqlalchemy import text
 import pika
+from threading import Thread
 
 logging.basicConfig(level=logging.DEBUG,
                       format='%(asctime)s %(levelname)s %(message)s')
@@ -123,14 +124,18 @@ app = create_app()
 migrate = Migrate(app, db, directory=db_path)
 
 client = Redfin()
-channel = open_pika_connection()
-scheduler = BackgroundScheduler()
-scheduler.add_job(func=get_all_user_listings_from_api(channel), trigger="interval", seconds=10)
-scheduler.start()
+
+
+def scheduler():
+    channel = open_pika_connection()
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=get_all_user_listings_from_api(channel), trigger="interval", seconds=10)
+    scheduler.start()
 
 with app.app_context():
 
     logger.info("Running with app.app_context():")
+    Thread(target=scheduler).start()
     db.create_all()
 
 @app.route("/api/listings/<zip_code>", methods = ['GET'])
