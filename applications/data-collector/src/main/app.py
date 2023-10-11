@@ -20,7 +20,9 @@ logging.basicConfig(level=logging.DEBUG,
 logger = logging.getLogger(__name__)
 
 
-def publish_message_to_queue():
+
+def open_pika_connection():
+
     # Establish a connection to a RabbitMQ server (localhost)
     url = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost/%2f')
     params = pika.URLParameters(url)
@@ -34,6 +36,9 @@ def publish_message_to_queue():
     # Create queue for analyzing zipcode
     channel.queue_declare(queue="analyze")
 
+    return channel
+
+def publish_message_to_queue(channel):
     # Publish message to queue to analyze data
     # Message will contain more data once more filters are added to search.
     # Right now it analyzes only on zip code and rent_price_ratio
@@ -43,8 +48,6 @@ def publish_message_to_queue():
                     "zip_code": "TEST",
                     "rent_price_ratio": 0.6
                 }))
-
-    connection.close()
 
 def create_app(config_obj=Config):
     app = Flask(__name__)
@@ -63,7 +66,7 @@ def load_user_listing_criteria():
         user_search_criteria = json.load(listing_criteria)
         return user_search_criteria
     
-def get_all_user_listings_from_api():
+def get_all_user_listings_from_api(channel):
     with app.app_context():
 
         logger.info("Running get_all_user_listings_from_api() function to get listings from Redfin");
@@ -77,7 +80,7 @@ def get_all_user_listings_from_api():
 
         save_listings_to_collector_database(all_listings)
 
-        publish_message_to_queue()
+        publish_message_to_queue(channel)
 
         return all_listings
 
@@ -120,9 +123,9 @@ app = create_app()
 migrate = Migrate(app, db, directory=db_path)
 
 client = Redfin()
-
+channel = open_pika_connection()
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=get_all_user_listings_from_api, trigger="interval", seconds=10)
+scheduler.add_job(func=get_all_user_listings_from_api(channel), trigger="interval", seconds=10)
 scheduler.start()
 
 with app.app_context():
