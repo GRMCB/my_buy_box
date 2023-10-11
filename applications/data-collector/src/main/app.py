@@ -155,7 +155,7 @@ def get_all_listings():
 @app.route('/health', methods = ['GET'])
 def health():
     try:
-        db.session.query("1").from_statement(text("SELECT 1")).all() 
+        listings = db.session.query(ListingRecord).all() 
         return render_template("health.html", resp="Data Collector app is Healthy")
     except:
         return "Data Collector app is Unhealthy", 503
